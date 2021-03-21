@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myhomebuddy.MainActivity;
 import com.example.myhomebuddy.R;
 import com.example.myhomebuddy.RegistrationActivity;
+import com.example.myhomebuddy.SellerMainActivity;
 import com.example.myhomebuddy.VerificationActivity;
 
 import org.json.JSONException;
@@ -35,8 +34,8 @@ import okhttp3.ResponseBody;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String host = "192.168.254.101:8000";
-//    private static final String host = "ec2-54-89-125-177.compute-1.amazonaws.com";
+//    private static final String host = "192.168.254.101:8000";
+    private static final String host = "ec2-54-89-125-177.compute-1.amazonaws.com";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     public static final String SHARED_PREFS_TOKEN = "sharedPrefsToken";
     public static final String TOKEN = "token";
@@ -53,14 +52,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Remove title bar
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //Remove notification bar
-        this.getWindow().setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        );
-
         setContentView(R.layout.activity_login);
 
         EditText etxtLoginEmail = findViewById(R.id.etxtLoginEmail);
@@ -100,19 +91,16 @@ public class LoginActivity extends AppCompatActivity {
                         try (ResponseBody responseBody = response.body()) {
                             JSONObject jo = new JSONObject(responseBody.string());
                             if (!response.isSuccessful()) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        try {
-                                            progress.dismiss();
-                                            Toast.makeText(
-                                                LoginActivity.this,
-                                                jo.getString("error"),
-                                                Toast.LENGTH_LONG
-                                            ).show();
-                                        } catch (JSONException e) {
-                                            Log.e("Ex", e.getMessage());
-                                        }
+                                runOnUiThread(() -> {
+                                    try {
+                                        progress.dismiss();
+                                        Toast.makeText(
+                                            LoginActivity.this,
+                                            jo.getString("error"),
+                                            Toast.LENGTH_LONG
+                                        ).show();
+                                    } catch (JSONException e) {
+                                        Log.e("Ex", e.getMessage());
                                     }
                                 });
                             } else {
@@ -211,12 +199,12 @@ public class LoginActivity extends AppCompatActivity {
                                             startActivity(intent);
                                             finish();
                                         } else {
-//                                            Intent intent = new Intent(
-//                                                    LoginActivity.this,
-//                                                    SellerDashboardActivity.class
-//                                            );
-//                                            startActivity(intent);
-//                                            finish();
+                                            Intent intent = new Intent(
+                                                    LoginActivity.this,
+                                                    SellerMainActivity.class
+                                            );
+                                            startActivity(intent);
+                                            finish();
                                         }
                                     }
                                 }

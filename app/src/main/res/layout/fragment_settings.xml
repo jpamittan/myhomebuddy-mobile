@@ -6,17 +6,136 @@
     android:layout_height="match_parent"
     tools:context=".ui.settings.SettingsFragment">
 
-    <TextView
-        android:id="@+id/text_notifications"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <ImageView
+                android:id="@+id/imgvProfileImage"
+                android:layout_width="96dp"
+                android:layout_height="84dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/profile_image_placeholder"
+                android:scaleType="center" />
+
+            <TextView
+                android:id="@+id/txtvProfileName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Fullname"
+                android:textColor="#3F51B5"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtvProfileEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Email"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/txtvProfileDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="User Profile"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtvProfileBirthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Birthday" />
+
+            <TextView
+                android:id="@+id/txtvProfileGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Gender" />
+
+            <TextView
+                android:id="@+id/txtvProfileContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Contact" />
+
+            <TextView
+                android:id="@+id/txtvProfileAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="Address"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtvProfileAddressUnit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Unit" />
+
+            <TextView
+                android:id="@+id/txtvProfileAddressSubdivision"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Subdivision" />
+
+            <TextView
+                android:id="@+id/txtvProfileAddressStreet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Street" />
+
+            <TextView
+                android:id="@+id/txtvProfileAddressBarangay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Barangay" />
+
+            <TextView
+                android:id="@+id/txtvProfileAddressCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="City" />
+
+            <TextView
+                android:id="@+id/txtvProfileAddressZip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Zip" />
+
+            <Button
+                android:id="@+id/btnUserLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="50dp"
+                android:backgroundTint="#F44336"
+                android:text="Logout" />
+
+        </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

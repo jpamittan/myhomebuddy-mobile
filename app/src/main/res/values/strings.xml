@@ -4,7 +4,7 @@
     <string name="title_schedule">Schedule</string>
     <string name="title_products">Products</string>
     <string name="title_settings">Settings</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login">Login</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
@@ -17,6 +17,8 @@
     <string name="title_activity_registration">RegistrationActivity</string>
     <string name="tab_text_1">User</string>
     <string name="tab_text_2">Seller</string>
+    <string name="seller_products">My Products</string>
+    <string name="add_product">Add Product</string>
     <string name="terms_conditions_consumers">
         <a href="http://ec2-54-89-125-177.compute-1.amazonaws.com/terms/consumers">Terms and Conditions</a>
     </string>

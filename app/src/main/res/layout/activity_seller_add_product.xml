@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/etxtmlProductDesc"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SellerAddProductActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/imgvProductImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <Button
+                android:id="@+id/btnProductImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Product image" />
+
+            <EditText
+                android:id="@+id/etxtProductName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Product name"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/etxtmProductDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="Product description"
+                android:inputType="textMultiLine"
+                android:minLines="5" />
+
+            <TextView
+                android:id="@+id/txtvProductCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Category:" />
+
+            <Spinner
+                android:id="@+id/spnProductCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/txtvSubCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sub-category:" />
+
+            <Spinner
+                android:id="@+id/spnProductSubCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/etxtvProductPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Product price"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/etxtProductQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Product quantity"
+                android:inputType="number" />
+
+            <Button
+                android:id="@+id/btnProductSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#009688"
+                android:drawableLeft="@drawable/ic_save_solid"
+                android:text="Save" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

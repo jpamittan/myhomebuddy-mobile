@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SellerMainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <Button
+                android:id="@+id/btnProducts"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:backgroundTint="#03A9F4"
+                android:drawableLeft="@drawable/ic_list_ul_solid"
+                android:text="My Products"
+                android:textColorLink="#FFFFFF" />
+
+            <Button
+                android:id="@+id/btnMyOrders"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:backgroundTint="#8BC34A"
+                android:drawableLeft="@drawable/ic_shopping_cart_solid"
+                android:text="My Orders" />
+
+            <Button
+                android:id="@+id/btnBillingAccount"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:drawableLeft="@drawable/ic_credit_card_regular"
+                android:text="Billing Account" />
+
+            <Button
+                android:id="@+id/btnProfile"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:drawableLeft="@drawable/ic_user_solid"
+                android:text="Profile" />
+
+            <Button
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#F44336"
+                android:text="Logout" />
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

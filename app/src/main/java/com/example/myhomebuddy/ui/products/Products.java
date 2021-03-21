@@ -1,18 +1,40 @@
 package com.example.myhomebuddy.ui.products;
 
+import org.json.JSONObject;
+
 public class Products {
+    int id;
     String name;
     String image;
     String category;
-    String location;
+    String subcategory;
     Double price;
+    JSONObject sellerProperties;
 
-    public Products(String name, String image, String category, String location, Double price) {
+    public Products(
+        int id,
+        String name,
+        String image,
+        String category,
+        String subcategory,
+        Double price,
+        JSONObject sellerProperties
+    ) {
+        this.id = id;
         this.name = name;
         this.image = image;
         this.category = category;
-        this.location = location;
+        this.subcategory = subcategory;
         this.price = price;
+        this.sellerProperties = sellerProperties;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -39,12 +61,12 @@ public class Products {
         this.category = category;
     }
 
-    public String getLocation() {
-        return location;
+    public String getSubcategory() {
+        return subcategory;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setSubcategory(String subcategory) {
+        this.subcategory = subcategory;
     }
 
     public Double getPrice() {
@@ -53,5 +75,13 @@ public class Products {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public JSONObject getSellerProperties() {
+        return sellerProperties;
+    }
+
+    public void setSellerProperties(JSONObject sellerProperties) {
+        this.sellerProperties = sellerProperties;
     }
 }

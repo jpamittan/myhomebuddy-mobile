@@ -39,14 +39,14 @@ public class ProductItemAdapter extends ArrayAdapter<Products> {
 
         ImageView imgvProductItemImage = convertView.findViewById(R.id.imgvProductItemImage);
         TextView txtvProductItemName = convertView.findViewById(R.id.txtvProductItemName);
-        TextView txtvProductItemLocation = convertView.findViewById(R.id.txtvProductItemLocation);
         TextView txtvProductItemCategory = convertView.findViewById(R.id.txtvProductItemCategory);
+        TextView txtvProductItemSubCategory = convertView.findViewById(R.id.txtvProductItemSubCategory);
         TextView txtvProductItemPrice = convertView.findViewById(R.id.txtvProductItemPrice);
 
         Picasso.get().load(getItem(position).getImage()).into(imgvProductItemImage);
         txtvProductItemName.setText(getItem(position).getName());
-        txtvProductItemLocation.setText(getItem(position).getLocation());
         txtvProductItemCategory.setText(getItem(position).getCategory());
+        txtvProductItemSubCategory.setText(getItem(position).getSubcategory());
         txtvProductItemPrice.setText("₱ " + df.format(getItem(position).getPrice()));
 
         return convertView;
