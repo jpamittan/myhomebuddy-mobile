@@ -15,12 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyHomeBuddy"
         android:usesCleartextTraffic="true"
-        tools:ignore="AllowBackup" >
-        <activity
-            android:name=".SellerDashboardActivity"
-            android:label="@string/title_activity_seller_dashboard"
-            android:theme="@style/Theme.MyHomeBuddy.NoActionBar" >
-        </activity>
+        tools:ignore="AllowBackup">
         <activity
             android:name=".VerificationActivity"
             android:theme="@style/Theme.MyHomeBuddy.NoActionBar" />

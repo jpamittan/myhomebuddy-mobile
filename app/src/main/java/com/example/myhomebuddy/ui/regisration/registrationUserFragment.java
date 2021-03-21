@@ -49,15 +49,6 @@ import okhttp3.Response;
  */
 public class registrationUserFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private Boolean blnProceedRegister;
     private static final String host = "ec2-54-89-125-177.compute-1.amazonaws.com";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -66,31 +57,13 @@ public class registrationUserFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment registrationUserFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static registrationUserFragment newInstance(String param1, String param2) {
-        registrationUserFragment fragment = new registrationUserFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static registrationUserFragment newInstance() {
+        return new registrationUserFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -127,11 +100,11 @@ public class registrationUserFragment extends Fragment {
 
         txtvTermsConditions.setMovementMethod(LinkMovementMethod.getInstance());
 
-        ArrayList<String> years = new ArrayList<String>();
+        ArrayList<String> years = new ArrayList<>();
         for (int i = Calendar.getInstance().get(Calendar.YEAR); i > 1900; i--) {
             years.add(String.valueOf(i));
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this.getActivity(),
                 android.R.layout.simple_spinner_item,
                 years
@@ -151,24 +124,19 @@ public class registrationUserFragment extends Fragment {
         progress.setCancelable(false);
 
         btnRegister.setOnClickListener(v -> {
-            blnProceedRegister = true;
-            if (
-                etxtFirstName.getText().toString().isEmpty() ||
-                etxtLastName.getText().toString().isEmpty() ||
-                etxtPassword.getText().toString().isEmpty() ||
-                etxtPhBlkLtUnitBldgNo.getText().toString().isEmpty() ||
-                etxtSubdisivion.getText().toString().isEmpty() ||
-                etxtStreet.getText().toString().isEmpty() ||
-                etxtBarangay.getText().toString().isEmpty() ||
-                etxtCity.getText().toString().isEmpty() ||
-                etxtZip.getText().toString().isEmpty() ||
-                etxtPhoneNo.getText().toString().isEmpty() ||
-                etxtEmail.getText().toString().isEmpty() ||
-                etxtVerifyPassword.getText().toString().isEmpty() ||
-                !etxtPassword.getText().toString().equals(etxtVerifyPassword.getText().toString())
-            ) {
-                blnProceedRegister = false;
-            }
+            blnProceedRegister = !etxtFirstName.getText().toString().isEmpty() &&
+                    !etxtLastName.getText().toString().isEmpty() &&
+                    !etxtPassword.getText().toString().isEmpty() &&
+                    !etxtPhBlkLtUnitBldgNo.getText().toString().isEmpty() &&
+                    !etxtSubdisivion.getText().toString().isEmpty() &&
+                    !etxtStreet.getText().toString().isEmpty() &&
+                    !etxtBarangay.getText().toString().isEmpty() &&
+                    !etxtCity.getText().toString().isEmpty() &&
+                    !etxtZip.getText().toString().isEmpty() &&
+                    !etxtPhoneNo.getText().toString().isEmpty() &&
+                    !etxtEmail.getText().toString().isEmpty() &&
+                    !etxtVerifyPassword.getText().toString().isEmpty() &&
+                    etxtPassword.getText().toString().equals(etxtVerifyPassword.getText().toString());
             if (blnProceedRegister) {
                 progress.show();
                 OkHttpClient client = new OkHttpClient();
@@ -207,17 +175,14 @@ public class registrationUserFragment extends Fragment {
                                 Log.d("Code", String.valueOf(response.code()));
                                 Log.i("RS", String.valueOf(responseObj));
                                 if (response.code() == 201) {
-                                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            progress.dismiss();
-                                            Intent intent = new Intent(
-                                                    getActivity(),
-                                                    RegistrationSuccessful.class
-                                            );
-                                            startActivity(intent);
-                                            getActivity().finish();
-                                        }
+                                    new Handler(Looper.getMainLooper()).post(() -> {
+                                        progress.dismiss();
+                                        Intent intent = new Intent(
+                                                getActivity(),
+                                                RegistrationSuccessful.class
+                                        );
+                                        startActivity(intent);
+                                        getActivity().finish();
                                     });
                                 }
                             } catch (JSONException | IOException e) {
@@ -227,12 +192,9 @@ public class registrationUserFragment extends Fragment {
                             try {
                                 JSONObject responseObj = new JSONObject(response.body().string());
                                 String msg = String.valueOf(responseObj.get("error"));
-                                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        progress.dismiss();
-                                        Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
-                                    }
+                                new Handler(Looper.getMainLooper()).post(() -> {
+                                    progress.dismiss();
+                                    Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
                                 });
                             } catch (JSONException | IOException e) {
                                 Log.e("RFx", e.getMessage());
@@ -242,12 +204,7 @@ public class registrationUserFragment extends Fragment {
 
                     @Override
                     public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                        new Handler(Looper.getMainLooper()).post(new Runnable() {
-                            @Override
-                            public void run() {
-                                progress.dismiss();
-                            }
-                        });
+                        new Handler(Looper.getMainLooper()).post(progress::dismiss);
                         Log.e("Fx", e.getMessage());
                     }
                 });
