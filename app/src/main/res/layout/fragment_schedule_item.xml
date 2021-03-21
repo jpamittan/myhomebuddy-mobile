@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/imgvScheduleItemImage"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:scaleType="fitXY"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/txtvScheduleItemName"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_toEndOf="@id/imgvScheduleItemImage"
+        android:text="Item name"
+        android:textColor="#303030"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtvScheduleItemQty"
+        android:layout_width="228dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtvScheduleItemName"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="11dp"
+        android:layout_toEndOf="@id/imgvScheduleItemImage"
+        android:text="qty"
+        android:textColor="#303030" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="61dp"
+        android:layout_height="62dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="4dp"
+        android:background="#DEE0EC" />
+
+    <TextView
+        android:id="@+id/txtvScheduleItemMonth"
+        android:layout_width="39dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/view"
+        android:layout_alignStart="@+id/view"
+        android:layout_alignTop="@+id/view"
+        android:layout_alignEnd="@+id/view"
+        android:layout_marginStart="11dp"
+        android:layout_marginLeft="-47dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginRight="-70dp"
+        android:gravity="center"
+        android:text="Month"
+        android:textColor="#2C2A2A"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/txtvScheduleItemDay"
+        android:layout_width="26dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtvScheduleItemMonth"
+        android:layout_alignBaseline="@id/view"
+        android:layout_alignStart="@+id/view"
+        android:layout_alignEnd="@+id/view"
+        android:layout_marginStart="18dp"
+        android:layout_marginLeft="-47dp"
+        android:layout_marginTop="-1dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="-70dp"
+        android:gravity="center"
+        android:text="01"
+        android:textColor="#FF9800"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtvScheduleItemTime"
+        android:layout_width="46dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtvScheduleItemDay"
+        android:layout_alignStart="@+id/view"
+        android:layout_alignEnd="@+id/view"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:text="time"
+        android:textColor="#FB5050"
+        android:textSize="8sp"
+        android:textStyle="italic" />
+</RelativeLayout>

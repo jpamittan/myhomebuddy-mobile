@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".registrationSellerFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/txtvBusinessInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Business Information"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtvBusinessName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Business name:" />
+
+            <EditText
+                android:id="@+id/etxtBusinessName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/txtvBusinessPermitNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Business permit no:" />
+
+            <EditText
+                android:id="@+id/etxtBusinessPermitNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/txtvBusinessProductService"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Business Product / Service" />
+
+            <Spinner
+                android:id="@+id/spnBusinessProductService"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/productservice" />
+
+            <TextView
+                android:id="@+id/txtvFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Business owner first name:" />
+
+            <EditText
+                android:id="@+id/etxtFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/txtvMiddleName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Business owner middle name:" />
+
+            <EditText
+                android:id="@+id/etxtMiddleName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/txtvLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Business owner last name:" />
+
+            <EditText
+                android:id="@+id/etxtLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/btnUploadPermit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Upload Business Permit" />
+
+            <ImageView
+                android:id="@+id/imgvBusinessPermit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:src="@tools:sample/avatars" />
+
+            <Button
+                android:id="@+id/btnUploadValidId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Upload any valid government ID"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/imgvValidId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:src="@tools:sample/avatars" />
+
+            <Button
+                android:id="@+id/btnUploadSelfie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Upload Selfie" />
+
+            <ImageView
+                android:id="@+id/imgvSelfie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/txtvBirthdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Birthdate:" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spnMonth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:entries="@array/month" />
+
+                <Spinner
+                    android:id="@+id/spnDay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:entries="@array/day" />
+
+                <Spinner
+                    android:id="@+id/spnYear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtvGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Gender:" />
+
+            <Spinner
+                android:id="@+id/spnGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/gender" />
+
+            <TextView
+                android:id="@+id/txtvAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Business Address"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtvPhBlkLtUnitBldgNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ph Blk Lt / Unit / Bldg no:" />
+
+            <EditText
+                android:id="@+id/etxtPhBlkLtUnitBldgNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/txtvStreet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Street:" />
+
+            <EditText
+                android:id="@+id/etxtStreet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/txtvBrgy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Barangay:" />
+
+            <EditText
+                android:id="@+id/etxtBarangay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/txtvCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="City:" />
+
+            <EditText
+                android:id="@+id/etxtCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/txtvZip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Zip:" />
+
+            <EditText
+                android:id="@+id/etxtZip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/txtvContacts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Business Contact"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtvLandlineNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Landline number:" />
+
+            <EditText
+                android:id="@+id/etxtLandlineNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/txtvMobileNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mobile number:" />
+
+            <EditText
+                android:id="@+id/etxtPhoneNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="phone" />
+
+            <TextView
+                android:id="@+id/txtvAccountInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Account Credentials"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtvEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email:" />
+
+            <EditText
+                android:id="@+id/etxtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textEmailAddress" />
+
+            <TextView
+                android:id="@+id/txtvPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Password:" />
+
+            <EditText
+                android:id="@+id/etxtPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPassword" />
+
+            <TextView
+                android:id="@+id/txtvVerifyPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Verify password:" />
+
+            <EditText
+                android:id="@+id/etxtVerifyPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPassword" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <CheckBox
+                    android:id="@+id/chkbAccept"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="I accept"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/txtvTermsConditionsSeller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:linksClickable="true"
+                android:text="@string/terms_conditions_sellers"
+                android:textColor="#2196F3"
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
+
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="@string/action_register" />
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
