@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/imgvReviewUserImage"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/profile_image_placeholder"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/txtvReviewUserFullname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="9dp"
+        android:layout_toEndOf="@id/imgvReviewUserImage"
+        android:text="Fullname"
+        android:textColor="#303030"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtvReviewRatings"
+        android:layout_width="wrap_content"
+        android:layout_height="14dp"
+        android:layout_below="@id/txtvReviewUserFullname"
+        android:layout_alignLeft="@id/txtvReviewUserFullname"
+        android:text="0.0"
+        android:textColor="#303030"
+        android:textSize="8sp"
+        android:textStyle="italic" />
+
+    <RatingBar
+        android:id="@+id/rbReviewRatings"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtvReviewUserFullname"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@id/txtvReviewRatings"
+        android:numStars="5"
+        android:paddingTop="2dp"
+        android:progressTint="#FFC107"
+        android:scaleX=".6"
+        android:scaleY=".6"
+        android:stepSize=".5"
+        android:transformPivotX="0dp"
+        android:transformPivotY="0dp" />
+
+    <TextView
+        android:id="@+id/txtvReviewCreatedAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtvReviewUserFullname"
+        android:layout_alignEnd="@id/txtvReviewUserFullname"
+        android:text="Datetime"
+        android:textSize="8sp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/txtvReviewMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtvReviewRatings"
+        android:layout_alignLeft="@id/txtvReviewUserFullname"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="9dp"
+        android:text="Message"
+        android:textSize="10sp" />
+
+</RelativeLayout>

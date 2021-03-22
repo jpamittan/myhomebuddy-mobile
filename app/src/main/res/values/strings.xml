@@ -19,6 +19,7 @@
     <string name="tab_text_2">Seller</string>
     <string name="seller_products">My Products</string>
     <string name="add_product">Add Product</string>
+    <string name="product_details">Product Details</string>
     <string name="terms_conditions_consumers">
         <a href="http://ec2-54-89-125-177.compute-1.amazonaws.com/terms/consumers">Terms and Conditions</a>
     </string>

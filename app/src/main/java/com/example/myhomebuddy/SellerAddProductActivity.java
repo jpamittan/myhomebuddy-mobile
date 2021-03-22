@@ -79,6 +79,7 @@ public class SellerAddProductActivity extends AppCompatActivity {
         Spinner spnProductSubCategory = findViewById(R.id.spnProductSubCategory);
         EditText etxtvProductPrice = findViewById(R.id.etxtvProductPrice);
         EditText etxtProductQuantity = findViewById(R.id.etxtProductQuantity);
+        EditText etxtProductStockThreshold = findViewById(R.id.etxtProductStockThreshold);
         Button btnProductSave = findViewById(R.id.btnProductSave);
 
         SharedPreferences shared = getSharedPreferences(SHARED_PREFS_TOKEN, MODE_PRIVATE);
@@ -93,7 +94,7 @@ public class SellerAddProductActivity extends AppCompatActivity {
         try {
             JSONObject joUserProperties = new JSONObject(user_properties);
             JSONObject joBusiness = joUserProperties.getJSONObject("business");
-            if (joBusiness.getString("product").equals("Mineral Water")) {
+            if (joBusiness.getString("product").equals("Drinking Water")) {
                 categoryArrLst.add("Distilled Water");
                 categoryArrLst.add("Mineral Water");
                 categoryArrLst.add("Purified Water");
@@ -159,7 +160,8 @@ public class SellerAddProductActivity extends AppCompatActivity {
                         !etxtProductName.getText().toString().isEmpty() &&
                         !etxtmProductDesc.getText().toString().isEmpty() &&
                         !etxtvProductPrice.getText().toString().isEmpty() &&
-                        !etxtProductQuantity.getText().toString().isEmpty();
+                        !etxtProductQuantity.getText().toString().isEmpty() &&
+                        !etxtProductStockThreshold.getText().toString().isEmpty();
                     if (blnProceedRegister) {
                         progress.show();
                         OkHttpClient client = new OkHttpClient();
@@ -178,7 +180,10 @@ public class SellerAddProductActivity extends AppCompatActivity {
                                 .toString() + "\","
                             + "\"image\" : \"" + productImgUrl + "\","
                             + "\"price\" : " + etxtvProductPrice.getText().toString() + ","
-                            + "\"quantity\" : " + etxtProductQuantity.getText().toString() + ""
+                            + "\"quantity\" : " + etxtProductQuantity.getText().toString() + ","
+                            + "\"stock_threshold\" : " + etxtProductStockThreshold
+                                .getText()
+                                .toString() + ""
                         + "}";
                         Log.d("json", json);
                         RequestBody body = RequestBody.create(JSON, json);

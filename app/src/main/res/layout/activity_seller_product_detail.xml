@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SellerProductDetailActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/imgvProductDetailsImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <Button
+                android:id="@+id/btnProductDetailsUpload"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Upload product image" />
+
+            <EditText
+                android:id="@+id/etxtProductDetailsName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Product Name"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/etxtmProductDetailsDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="Product Description"
+                android:inputType="textMultiLine"
+                android:minLines="5" />
+
+            <TextView
+                android:id="@+id/txtvProductDetailsCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Category" />
+
+            <Spinner
+                android:id="@+id/spnProductDetailsCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/txtvProductDetailsSubCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sub-category" />
+
+            <Spinner
+                android:id="@+id/spnProductDetailsSubCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/txtvProductDetailsPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Product price:" />
+
+            <EditText
+                android:id="@+id/etxtProductDetailsPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Product Price"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:id="@+id/txtvProductDetailsQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Product quantity:" />
+
+            <EditText
+                android:id="@+id/etxtProductDetailsQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Product Quantity"
+                android:inputType="number" />
+
+            <TextView
+                android:id="@+id/txtvProductDetailsStockThreshold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Stock threshold:" />
+
+            <EditText
+                android:id="@+id/etxtProductDetailsStockThreshold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Stock Threshold"
+                android:inputType="number" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <Button
+                    android:id="@+id/btnProductDetailsDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#F44336"
+                    android:drawableLeft="@drawable/ic_trash_alt_solid"
+                    android:text="Delete" />
+
+                <Button
+                    android:id="@+id/btnProductDetailsSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#009688"
+                    android:drawableLeft="@drawable/ic_save_solid"
+                    android:text="Save" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/txtvProductDetailsRatings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Product ratings:" />
+
+                <RatingBar
+                    android:id="@+id/rbProductDetails"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:numStars="5"
+                    android:paddingTop="2dp"
+                    android:progressTint="#FFC107"
+                    android:stepSize=".5" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtvCustomerReviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Customer reviews:" />
+
+            <TextView
+                android:id="@+id/txtvCutomerNoReviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="No reviews" />
+
+            <ListView
+                android:id="@+id/lvCustomerReviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -121,7 +121,8 @@ public class ProductsFragment extends Fragment {
                                     Double.parseDouble(
                                             dataArr.getJSONObject(i).getString("price")
                                     ),
-                                    dataArr.getJSONObject(i).getJSONObject("seller")
+                                    dataArr.getJSONObject(i).getInt("quantity"),
+                                    null
                                 ));
                             }
                             productItemAdapter = new ProductItemAdapter(
