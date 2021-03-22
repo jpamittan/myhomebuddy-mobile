@@ -240,7 +240,6 @@ public class SellerAddProductActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                                progress.dismiss();
                                 new Handler(Looper.getMainLooper()).post(progress::dismiss);
                                 Log.e("Fx", e.getMessage());
                             }

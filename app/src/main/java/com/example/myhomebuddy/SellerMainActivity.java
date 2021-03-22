@@ -36,22 +36,14 @@ public class SellerMainActivity extends AppCompatActivity {
                         MODE_PRIVATE
                     );
                     settings.edit().clear().apply();
-                    Intent intent = new Intent(
-                        SellerMainActivity.this,
-                        LoginActivity.class
-                    );
-                    startActivity(intent);
+                    startActivity(new Intent(this, LoginActivity.class));
                     finish();
                 })
                 .setNegativeButton(android.R.string.no, null).show();
         });
 
         btnProducts.setOnClickListener(v -> {
-            Intent intent = new Intent(
-                SellerMainActivity.this,
-                SellerProductActivity.class
-            );
-            startActivity(intent);
+            startActivity(new Intent(this, SellerProductActivity.class));
         });
 
         btnMyOrders.setOnClickListener(v -> {
@@ -63,7 +55,7 @@ public class SellerMainActivity extends AppCompatActivity {
         });
 
         btnProfile.setOnClickListener(v -> {
-
+            startActivity(new Intent(this, SellerProfileActivity.class));
         });
     }
 }

@@ -96,26 +96,35 @@ public class SellerProductActivity extends AppCompatActivity {
 
             client.newCall(request).enqueue(new Callback() {
                 @Override public void onFailure(Call call, IOException e) {
-                    progress.dismiss();
                     Log.e("Fail", e.getMessage());
-                    Toast.makeText(SellerProductActivity.this,
+                    runOnUiThread(() -> {
+                        progress.dismiss();
+                        Toast.makeText(SellerProductActivity.this,
                             "An error has occured. Please try again.",
                             Toast.LENGTH_LONG
-                    ).show();
+                        ).show();
+                    });
                 }
 
                 @Override public void onResponse(Call call, Response response) throws IOException {
-                    progress.dismiss();
                     try {
                         ResponseBody responseBody = response.body();
                         JSONObject joProducts = new JSONObject(responseBody.string());
 
                         if (!response.isSuccessful()) {
-                            Toast.makeText(
-                                    SellerProductActivity.this,
-                                    joProducts.getString("error"),
-                                    Toast.LENGTH_LONG
-                            ).show();
+                            runOnUiThread(() -> {
+                                progress.dismiss();
+                                try {
+                                    Toast.makeText(
+                                        SellerProductActivity.this,
+                                        joProducts.getString("error"),
+                                        Toast.LENGTH_LONG
+                                    ).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+
                         } else {
                             JSONArray dataArr = joProducts.getJSONArray("data");
                             Log.i("Products", dataArr.toString());
@@ -140,14 +149,19 @@ public class SellerProductActivity extends AppCompatActivity {
                                 R.layout.fragment_products_item,
                                 products
                             );
-                            runOnUiThread(() -> lvSellerProducts.setAdapter(productItemAdapter));
+                            runOnUiThread(() -> {
+                                progress.dismiss();
+                                lvSellerProducts.setAdapter(productItemAdapter);
+                            });
                         }
                     } catch (JSONException e) {
                         Log.e("Ex", Log.getStackTraceString(e));
-                        Toast.makeText(SellerProductActivity.this,
+                        runOnUiThread(() -> {
+                            Toast.makeText(SellerProductActivity.this,
                                 "An error has occured. Please try again.",
                                 Toast.LENGTH_LONG
-                        ).show();
+                            ).show();
+                        });
                     }
                 }
             });

@@ -68,8 +68,6 @@ public class SellerProductDetailActivity extends AppCompatActivity {
     String user_id;
     String user_properties;
     ProgressDialog progress;
-    String oldProductImgUrl;
-    String productImgUrl;
     ImageView imgvProductDetailsImage;
     Button btnProductDetailsUpload;
     TextView etxtProductDetailsName;
@@ -208,28 +206,37 @@ public class SellerProductDetailActivity extends AppCompatActivity {
 
                         client.newCall(request).enqueue(new Callback() {
                             @Override public void onFailure(Call call, IOException e) {
-                                progress.dismiss();
                                 Log.e("Fail", e.getMessage());
-                                Toast.makeText(SellerProductDetailActivity.this,
+                                runOnUiThread(() -> {
+                                    progress.dismiss();
+                                    Toast.makeText(SellerProductDetailActivity.this,
                                         "An error has occured. Please try again.",
                                         Toast.LENGTH_LONG
-                                ).show();
+                                    ).show();
+                                });
                             }
 
                             @SuppressLint("SetTextI18n")
                             @Override public void onResponse(Call call, Response response) throws IOException {
-                                progress.dismiss();
                                 try {
                                     ResponseBody responseBody = response.body();
                                     JSONObject joProduct = new JSONObject(responseBody.string());
 
                                     if (!response.isSuccessful()) {
-                                        Toast.makeText(
-                                            SellerProductDetailActivity.this,
-                                            joProduct.getString("error"),
-                                            Toast.LENGTH_LONG
-                                        ).show();
+                                        runOnUiThread(() -> {
+                                            progress.dismiss();
+                                            try {
+                                                Toast.makeText(
+                                                    SellerProductDetailActivity.this,
+                                                    joProduct.getString("error"),
+                                                    Toast.LENGTH_LONG
+                                                ).show();
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        });
                                     } else {
+                                        runOnUiThread(() -> progress.dismiss());
                                         Log.i("Delete", joProduct.getString("message"));
                                         Intent returnIntent = new Intent();
                                         setResult(
@@ -240,10 +247,12 @@ public class SellerProductDetailActivity extends AppCompatActivity {
                                     }
                                 } catch (JSONException e) {
                                     Log.e("Ex", Log.getStackTraceString(e));
-                                    Toast.makeText(SellerProductDetailActivity.this,
-                                        "An error has occured. Please try again.",
-                                        Toast.LENGTH_LONG
-                                    ).show();
+                                    runOnUiThread(() -> {
+                                        Toast.makeText(SellerProductDetailActivity.this,
+                                            "An error has occured. Please try again.",
+                                            Toast.LENGTH_LONG
+                                        ).show();
+                                    });
                                 }
                             }
                         });
@@ -266,12 +275,6 @@ public class SellerProductDetailActivity extends AppCompatActivity {
                 .setMessage("Are you sure?")
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
-                    Log.d("name", etxtProductDetailsName.getText().toString());
-                    Log.d("desc", etxtmProductDetailsDesc.getText().toString());
-                    Log.d("price", etxtProductDetailsPrice.getText().toString());
-                    Log.d("qty", etxtProductDetailsQuantity.getText().toString());
-                    Log.d("stock", etxtProductDetailsStockThreshold.getText().toString());
-
                     blnProceedRegister = !etxtProductDetailsName.getText().toString().isEmpty() &&
                         !etxtmProductDetailsDesc.getText().toString().isEmpty() &&
                         !etxtProductDetailsPrice.getText().toString().isEmpty() &&
@@ -279,11 +282,6 @@ public class SellerProductDetailActivity extends AppCompatActivity {
                         !etxtProductDetailsStockThreshold.getText().toString().isEmpty();
                     if (blnProceedRegister) {
                         progress.show();
-
-                        String imgUrl =  (!productImgUrl.equals(null))
-                            ? productImgUrl
-                            : oldProductImgUrl;
-
                         OkHttpClient client = new OkHttpClient();
                         String json = "{"
                             + "\"name\" : \"" + etxtProductDetailsName
@@ -298,7 +296,6 @@ public class SellerProductDetailActivity extends AppCompatActivity {
                             + "\"sub_category\" : \"" + spnProductDetailsSubCategory
                             .getSelectedItem()
                             .toString() + "\","
-                            + "\"image\" : \"" + imgUrl + "\","
                             + "\"price\" : " + etxtProductDetailsPrice.getText().toString() + ","
                             + "\"quantity\" : " + etxtProductDetailsQuantity.getText().toString() + ","
                             + "\"stock_threshold\" : " + etxtProductDetailsStockThreshold
@@ -321,7 +318,7 @@ public class SellerProductDetailActivity extends AppCompatActivity {
                         client.newCall(request).enqueue(new Callback() {
                             @Override
                             public void onResponse(@NotNull Call call, @NotNull Response response) {
-                                progress.dismiss();
+                                runOnUiThread(() -> progress.dismiss());
                                 if (response.isSuccessful()) {
                                     try {
                                         JSONObject res = new JSONObject(response.body().string());
@@ -330,13 +327,10 @@ public class SellerProductDetailActivity extends AppCompatActivity {
                                         if (response.code() == 200) {
                                             Intent returnIntent = new Intent();
                                             setResult(
-                                                    SellerAddProductActivity.RESULT_OK,
-                                                    returnIntent
+                                                SellerAddProductActivity.RESULT_OK,
+                                                returnIntent
                                             );
                                             finish();
-                                            new Handler(Looper.getMainLooper()).post(() -> {
-
-                                            });
                                         }
                                     } catch (JSONException | IOException e) {
                                         Log.e("RSx", e.getMessage());
@@ -360,8 +354,7 @@ public class SellerProductDetailActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                                progress.dismiss();
-                                new Handler(Looper.getMainLooper()).post(progress::dismiss);
+                                runOnUiThread(() -> progress.dismiss());
                                 Log.e("Fx", e.getMessage());
                             }
                         });
@@ -381,47 +374,54 @@ public class SellerProductDetailActivity extends AppCompatActivity {
         try {
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .header("Accept", "application/json")
-                    .header("Content-Type", "application/json")
-                    .header(
-                            "Authorization",
-                            token_type + " " + token
-                    )
-                    .url("http://" + host + "/api/seller/product/" + productId)
-                    .get()
-                    .build();
+                .header("Accept", "application/json")
+                .header("Content-Type", "application/json")
+                .header(
+                        "Authorization",
+                        token_type + " " + token
+                )
+                .url("http://" + host + "/api/seller/product/" + productId)
+                .get()
+                .build();
 
             client.newCall(request).enqueue(new Callback() {
                 @Override public void onFailure(Call call, IOException e) {
-                    progress.dismiss();
                     Log.e("Fail", e.getMessage());
-                    Toast.makeText(SellerProductDetailActivity.this,
-                            "An error has occured. Please try again.",
-                            Toast.LENGTH_LONG
-                    ).show();
+                    runOnUiThread(() -> {
+                        progress.dismiss();
+                        Toast.makeText(SellerProductDetailActivity.this,
+                                "An error has occured. Please try again.",
+                                Toast.LENGTH_LONG
+                        ).show();
+                    });
                 }
 
                 @SuppressLint("SetTextI18n")
                 @Override public void onResponse(Call call, Response response) throws IOException {
-                    progress.dismiss();
                     try {
                         ResponseBody responseBody = response.body();
                         JSONObject joProduct = new JSONObject(responseBody.string());
-
                         if (!response.isSuccessful()) {
-                            Toast.makeText(
-                                    SellerProductDetailActivity.this,
-                                    joProduct.getString("error"),
-                                    Toast.LENGTH_LONG
-                            ).show();
+                            runOnUiThread(() -> {
+                                progress.dismiss();
+                                try {
+                                    Toast.makeText(
+                                        SellerProductDetailActivity.this,
+                                        joProduct.getString("error"),
+                                        Toast.LENGTH_LONG
+                                    ).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            });
                         } else {
                             JSONObject data = joProduct.getJSONObject("data");
                             Log.i("Product", data.toString());
 
                             runOnUiThread(() -> {
+                                progress.dismiss();
                                 try {
-                                    oldProductImgUrl = data.getString("image");
-                                    Picasso.get().load(oldProductImgUrl)
+                                    Picasso.get().load(data.getString("image"))
                                             .into(imgvProductDetailsImage);
                                     etxtProductDetailsName.setText(data.getString("name"));
                                     etxtmProductDetailsDesc.setText(data.getString("description"));
@@ -459,9 +459,9 @@ public class SellerProductDetailActivity extends AppCompatActivity {
                                         ));
                                     }
                                     reviewItemAdapter = new ReviewItemAdapter(
-                                            SellerProductDetailActivity.this,
-                                            R.layout.fragment_reviews_item,
-                                            reviews
+                                        SellerProductDetailActivity.this,
+                                        R.layout.fragment_reviews_item,
+                                        reviews
                                     );
                                     runOnUiThread(() -> lvCustomerReviews.setAdapter(reviewItemAdapter));
 
@@ -472,10 +472,12 @@ public class SellerProductDetailActivity extends AppCompatActivity {
                         }
                     } catch (JSONException e) {
                         Log.e("Ex", Log.getStackTraceString(e));
-                        Toast.makeText(SellerProductDetailActivity.this,
+                        runOnUiThread(() -> {
+                            Toast.makeText(SellerProductDetailActivity.this,
                                 "An error has occured. Please try again.",
                                 Toast.LENGTH_LONG
-                        ).show();
+                            ).show();
+                        });
                     }
                 }
             });
@@ -494,6 +496,7 @@ public class SellerProductDetailActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
+                progress.show();
                 Uri selectedImage = data.getData();
                 String filePath = ImageFilePath.getPath(
                         SellerProductDetailActivity.this,
@@ -547,12 +550,64 @@ public class SellerProductDetailActivity extends AppCompatActivity {
                     uploadtask.addOnFailureListener(exception ->
                             Log.e("FBFx", exception.getMessage())
                     )
-                            .addOnSuccessListener(taskSnapshot ->
-                                    sr.getDownloadUrl().addOnSuccessListener(downloadUrl -> {
-                                        productImgUrl = downloadUrl.toString();
-                                        Log.i("ImgURL", downloadUrl.toString());
-                                    })
-                            );
+                        .addOnSuccessListener(taskSnapshot ->
+                            sr.getDownloadUrl().addOnSuccessListener(downloadUrl -> {
+                                Log.i("ImgURL", downloadUrl.toString());
+
+                                OkHttpClient client = new OkHttpClient();
+                                String json = "{"
+                                    + "\"image\" : \"" + downloadUrl.toString() + "\""
+                                + "}";
+                                Log.d("json", json);
+                                RequestBody body = RequestBody.create(JSON, json);
+                                Request request = new Request.Builder()
+                                    .header("Accept", "application/json")
+                                    .header("Content-Type", "application/json")
+                                    .header(
+                                        "Authorization",
+                                        token_type + " " + token
+                                    )
+                                    .url("http://" + host + "/api/seller/product/" + productId)
+                                    .put(body)
+                                    .build();
+
+                                client.newCall(request).enqueue(new Callback() {
+                                    @Override
+                                    public void onResponse(@NotNull Call call, @NotNull Response response) {
+                                        progress.dismiss();
+                                        if (response.isSuccessful()) {
+                                            try {
+                                                JSONObject res = new JSONObject(response.body().string());
+                                                Log.d("Code", String.valueOf(response.code()));
+                                                Log.i("RS", String.valueOf(res));
+                                            } catch (JSONException | IOException e) {
+                                                Log.e("RSx", e.getMessage());
+                                            }
+                                        } else {
+                                            try {
+                                                JSONObject res = new JSONObject(response.body().string());
+                                                Log.d("RF", res.toString());
+                                                new Handler(Looper.getMainLooper()).post(() -> {
+                                                    Toast.makeText(
+                                                        SellerProductDetailActivity.this,
+                                                        "An error has occured.",
+                                                        Toast.LENGTH_LONG
+                                                    ).show();
+                                                });
+                                            } catch (JSONException | IOException e) {
+                                                Log.e("RFx", e.getMessage());
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                                        progress.dismiss();
+                                        Log.e("Fx", e.getMessage());
+                                    }
+                                });
+                            })
+                        );
                 } else {
                     Toast.makeText(
                             SellerProductDetailActivity.this,
