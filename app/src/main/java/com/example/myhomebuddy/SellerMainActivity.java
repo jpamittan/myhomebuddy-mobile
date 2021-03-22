@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -51,11 +52,27 @@ public class SellerMainActivity extends AppCompatActivity {
         });
 
         btnBillingAccount.setOnClickListener(v -> {
-
+            Intent intent = new Intent(this, SellerBillingAccountActivity.class);
+            startActivityForResult(intent ,1);
         });
 
         btnProfile.setOnClickListener(v -> {
             startActivity(new Intent(this, SellerProfileActivity.class));
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if(resultCode == SellerBillingAccountActivity.RESULT_OK){
+                Toast.makeText(
+                    this,
+                    "Billing account save successfully.",
+                    Toast.LENGTH_LONG
+                ).show();
+            }
+        }
+    }//onActivityResult
 }

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SellerBillingAccountActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/txtvAccountType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Billing account type:" />
+
+            <Spinner
+                android:id="@+id/spnAccountType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/billingAccountType" />
+
+            <TextView
+                android:id="@+id/txtvCardNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mobile / Card no:" />
+
+            <EditText
+                android:id="@+id/etvtCardNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="135dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtvMM"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="MM" />
+
+                    <EditText
+                        android:id="@+id/etxtMM"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="137dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtvYY"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="YY" />
+
+                    <EditText
+                        android:id="@+id/etxtYY"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtvCVC"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="CVC" />
+
+                    <EditText
+                        android:id="@+id/etxtCVC"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtvBillingAccountFullname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Account name:" />
+
+            <EditText
+                android:id="@+id/etxtBillingAccountFullname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/txtvBillingAccountAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Address:" />
+
+            <EditText
+                android:id="@+id/etxtBillingAccountAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/txtvBillingAccountAddress2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Address line 2:" />
+
+            <EditText
+                android:id="@+id/etxtBillingAccountAddress2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/txtvBillingAccountCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="City:" />
+
+            <EditText
+                android:id="@+id/etxtBillingAccountCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtvBillingAccountState"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="State:" />
+
+                    <EditText
+                        android:id="@+id/etxtBillingAccountState"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPersonName" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtvBillingAccountZip"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Zip:" />
+
+                    <EditText
+                        android:id="@+id/etxtBillingAccountZip"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtvBillingAccountCountry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Country:" />
+
+            <Spinner
+                android:id="@+id/spnCountry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/countries" />
+
+            <Button
+                android:id="@+id/btnBillingAccountSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#009688"
+                android:drawableLeft="@drawable/ic_save_solid"
+                android:text="Save" />
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
