@@ -10,6 +10,7 @@ public class Products {
     String subcategory;
     Double price;
     int quantity;
+    int threshold;
     JSONObject sellerProperties;
 
     public Products(
@@ -20,6 +21,7 @@ public class Products {
         String subcategory,
         Double price,
         int quantity,
+        int threshold,
         JSONObject sellerProperties
     ) {
         this.id = id;
@@ -29,6 +31,7 @@ public class Products {
         this.subcategory = subcategory;
         this.price = price;
         this.quantity = quantity;
+        this.threshold = threshold;
         this.sellerProperties = sellerProperties;
     }
 
@@ -86,6 +89,14 @@ public class Products {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getThreshold() {
+        return threshold;
+    }
+
+    public void setThreshold(int threshold) {
+        this.threshold = threshold;
     }
 
     public JSONObject getSellerProperties() {

@@ -19,13 +19,13 @@ import com.squareup.picasso.Picasso;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class ProductItemAdapter extends ArrayAdapter<Products> {
+public class SellerProductItemAdapter extends ArrayAdapter<Products> {
 
     private final Context mContext;
     private final int mResource;
     private static DecimalFormat df = new DecimalFormat("0.00");
 
-    public ProductItemAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Products> objects) {
+    public SellerProductItemAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Products> objects) {
         super(context, resource, objects);
         this.mContext = context;
         this.mResource = resource;
@@ -47,7 +47,17 @@ public class ProductItemAdapter extends ArrayAdapter<Products> {
         Picasso.get().load(getItem(position).getImage()).into(imgvProductItemImage);
         txtvProductItemName.setText(getItem(position).getName());
         txtvProductItemCategory.setText(getItem(position).getCategory());
-        txtvProductItemSubCategory.setText(getItem(position).getSubcategory());
+
+        if (getItem(position).getQuantity() <= 0) {
+            txtvProductItemSubCategory.setText("Out of stock");
+            txtvProductItemSubCategory.setTextColor(Color.parseColor("#E74C3C"));
+        } else if (getItem(position).getThreshold() > getItem(position).getQuantity()) {
+            txtvProductItemSubCategory.setText("Low stocks");
+            txtvProductItemSubCategory.setTextColor(Color.parseColor("#F1C40F"));
+        } else {
+            txtvProductItemSubCategory.setText(getItem(position).getSubcategory());
+        }
+
         txtvProductItemPrice.setText("₱ " + df.format(getItem(position).getPrice()));
 
         return convertView;

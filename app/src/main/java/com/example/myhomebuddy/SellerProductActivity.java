@@ -1,19 +1,15 @@
 package com.example.myhomebuddy;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myhomebuddy.ui.login.LoginActivity;
 import com.example.myhomebuddy.ui.products.Products;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -28,7 +24,6 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
@@ -43,7 +38,7 @@ public class SellerProductActivity extends AppCompatActivity {
     String token;
     ArrayList<Products> products;
     ListView lvSellerProducts;
-    ProductItemAdapter productItemAdapter;
+    SellerProductItemAdapter productItemAdapter;
     ProgressDialog progress;
 
     @Override
@@ -141,10 +136,11 @@ public class SellerProductActivity extends AppCompatActivity {
                                         dataArr.getJSONObject(i).getString("price")
                                     ),
                                     dataArr.getJSONObject(i).getInt("quantity"),
+                                    dataArr.getJSONObject(i).getInt("stock_threshold"),
                                     null
                                 ));
                             }
-                            productItemAdapter = new ProductItemAdapter(
+                            productItemAdapter = new SellerProductItemAdapter(
                                 SellerProductActivity.this,
                                 R.layout.fragment_products_item,
                                 products

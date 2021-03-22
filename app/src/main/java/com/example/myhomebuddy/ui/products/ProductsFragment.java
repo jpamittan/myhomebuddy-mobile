@@ -2,6 +2,7 @@ package com.example.myhomebuddy.ui.products;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,8 +15,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.myhomebuddy.ConsumerProductDetailActivity;
 import com.example.myhomebuddy.ProductItemAdapter;
 import com.example.myhomebuddy.R;
+import com.example.myhomebuddy.SellerProductDetailActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,12 +47,13 @@ public class ProductsFragment extends Fragment {
     ProgressDialog progress;
     String token_type;
     String token;
+    ArrayList<Products> products;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_products, container, false);
         lvProducts = root.findViewById(R.id.lvProducts);
-        ArrayList<Products> products = new ArrayList<>();
+        products = new ArrayList<>();
 
         SharedPreferences shared = getActivity().getSharedPreferences(
             SHARED_PREFS_TOKEN,
@@ -65,6 +69,12 @@ public class ProductsFragment extends Fragment {
         progress.show();
 
         fetchProducts();
+
+        lvProducts.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = new Intent(getActivity(), ConsumerProductDetailActivity.class);
+            intent.putExtra("id", products.get(position).getId());
+            startActivity(intent);
+        });
 
         return root;
     }
@@ -101,16 +111,23 @@ public class ProductsFragment extends Fragment {
                         JSONObject joProducts = new JSONObject(responseBody.string());
 
                         if (!response.isSuccessful()) {
-                            Toast.makeText(
-                                getActivity(),
-                                joProducts.getString("error"),
-                                Toast.LENGTH_LONG
-                            ).show();
+                            getActivity()
+                                .runOnUiThread(() -> {
+                                    try {
+                                        Toast.makeText(
+                                            getActivity(),
+                                            joProducts.getString("error"),
+                                            Toast.LENGTH_LONG
+                                        ).show();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                });
                         } else {
                             JSONArray dataArr = joProducts.getJSONArray("data");
                             Log.i("Products", dataArr.toString());
 
-                            ArrayList<Products> products = new ArrayList<>();
+                            products.clear();
                             for (int i = 0; i < dataArr.length(); i++) {
                                 products.add(new Products(
                                     dataArr.getJSONObject(i).getInt("id"),
@@ -122,6 +139,7 @@ public class ProductsFragment extends Fragment {
                                             dataArr.getJSONObject(i).getString("price")
                                     ),
                                     dataArr.getJSONObject(i).getInt("quantity"),
+                                    dataArr.getJSONObject(i).getInt("stock_threshold"),
                                     null
                                 ));
                             }
