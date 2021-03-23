@@ -17,6 +17,10 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".ConsumerProductReviewActivity"
+            android:label="@string/product_review"
+            android:theme="@style/Theme.MyHomeBuddy" />
+        <activity
             android:name=".ConsumerProductDetailActivity"
             android:label="@string/product_details"
             android:theme="@style/Theme.MyHomeBuddy" />

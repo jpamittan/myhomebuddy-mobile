@@ -13,6 +13,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -55,6 +56,9 @@ public class SellerBillingAccountActivity extends AppCompatActivity {
     Spinner spnAccountType;
     TextView txtvCardNo;
     EditText etvtCardNo;
+    TextView txtvMM;
+    TextView txtvYY;
+    TextView txtvCVC;
     EditText etxtMM;
     EditText etxtYY;
     EditText etxtCVC;
@@ -76,6 +80,9 @@ public class SellerBillingAccountActivity extends AppCompatActivity {
         spnAccountType = findViewById(R.id.spnAccountType);
         txtvCardNo = findViewById(R.id.txtvCardNo);
         etvtCardNo = findViewById(R.id.etvtCardNo);
+        txtvMM = findViewById(R.id.txtvMM);
+        txtvYY = findViewById(R.id.txtvYY);
+        txtvCVC = findViewById(R.id.txtvCVC);
         etxtMM = findViewById(R.id.etxtMM);
         etxtYY = findViewById(R.id.etxtYY);
         etxtCVC = findViewById(R.id.etxtCVC);
@@ -99,13 +106,46 @@ public class SellerBillingAccountActivity extends AppCompatActivity {
 
         fetchBillingAccount();
 
+        spnAccountType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    txtvMM.setVisibility(View.VISIBLE);
+                    txtvYY.setVisibility(View.VISIBLE);
+                    txtvCVC.setVisibility(View.VISIBLE);
+                    etxtMM.setVisibility(View.VISIBLE);
+                    etxtYY.setVisibility(View.VISIBLE);
+                    etxtCVC.setVisibility(View.VISIBLE);
+                } else {
+                    txtvMM.setVisibility(View.GONE);
+                    txtvYY.setVisibility(View.GONE);
+                    txtvCVC.setVisibility(View.GONE);
+                    etxtMM.setText("");
+                    etxtYY.setText("");
+                    etxtCVC.setText("");
+                    etxtMM.setVisibility(View.GONE);
+                    etxtYY.setVisibility(View.GONE);
+                    etxtCVC.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         btnBillingAccountSave.setOnClickListener(v -> {
             new AlertDialog.Builder(this)
                 .setTitle("Billing account")
                 .setMessage("Are you sure?")
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
-                    if (spnAccountType.getSelectedItem().toString().equals("GCash")) {
+                    String json = null;
+                    if (
+                        spnAccountType.getSelectedItem().toString().equals("GCash") ||
+                        spnAccountType.getSelectedItem().toString().equals("Paymaya")
+                    ) {
                         blnProceedRegister = !etvtCardNo.getText().toString().isEmpty() &&
                             !etxtBillingAccountFullname.getText().toString().isEmpty() &&
                             !etxtBillingAccountAddress.getText().toString().isEmpty() &&
@@ -113,6 +153,17 @@ public class SellerBillingAccountActivity extends AppCompatActivity {
                             !etxtBillingAccountCity.getText().toString().isEmpty() &&
                             !etxtBillingAccountState.getText().toString().isEmpty() &&
                             !etxtBillingAccountZip.getText().toString().isEmpty();
+                            json = "{"
+                                + "\"account_type\" : \"" + spnAccountType.getSelectedItem().toString() + "\","
+                                + "\"card_no\" : \"" + etvtCardNo.getText().toString() + "\","
+                                + "\"account_name\" : \"" + etxtBillingAccountFullname.getText().toString() + "\","
+                                + "\"address_line_a\" : \"" + etxtBillingAccountAddress.getText().toString() + "\","
+                                + "\"address_line_b\" : \"" + etxtBillingAccountAddress2.getText().toString() + "\","
+                                + "\"city\" : \"" + etxtBillingAccountCity.getText().toString() + "\","
+                                + "\"state\" : \"" + etxtBillingAccountState.getText().toString() + "\","
+                                + "\"zip\" : \"" + etxtBillingAccountZip.getText().toString() + "\","
+                                + "\"country\" : \"" + spnCountry.getSelectedItem().toString() + "\""
+                            + "}";
                     } else {
                         blnProceedRegister = !etvtCardNo.getText().toString().isEmpty() &&
                             !etxtMM.getText().toString().isEmpty() &&
@@ -124,24 +175,25 @@ public class SellerBillingAccountActivity extends AppCompatActivity {
                             !etxtBillingAccountCity.getText().toString().isEmpty() &&
                             !etxtBillingAccountState.getText().toString().isEmpty() &&
                             !etxtBillingAccountZip.getText().toString().isEmpty();
+                            json = "{"
+                                + "\"account_type\" : \"" + spnAccountType.getSelectedItem().toString() + "\","
+                                + "\"card_no\" : \"" + etvtCardNo.getText().toString() + "\","
+                                + "\"mm\" : \"" + etxtMM.getText().toString() + "\","
+                                + "\"yy\" : \"" + etxtYY.getText().toString() + "\","
+                                + "\"cvc\" : \"" + etxtCVC.getText().toString() + "\","
+                                + "\"account_name\" : \"" + etxtBillingAccountFullname.getText().toString() + "\","
+                                + "\"address_line_a\" : \"" + etxtBillingAccountAddress.getText().toString() + "\","
+                                + "\"address_line_b\" : \"" + etxtBillingAccountAddress2.getText().toString() + "\","
+                                + "\"city\" : \"" + etxtBillingAccountCity.getText().toString() + "\","
+                                + "\"state\" : \"" + etxtBillingAccountState.getText().toString() + "\","
+                                + "\"zip\" : \"" + etxtBillingAccountZip.getText().toString() + "\","
+                                + "\"country\" : \"" + spnCountry.getSelectedItem().toString() + "\""
+                            + "}";
                     }
                     if (blnProceedRegister) {
                         progress.show();
                         OkHttpClient client = new OkHttpClient();
-                        String json = "{"
-                            + "\"account_type\" : \"" + spnAccountType.getSelectedItem().toString() + "\","
-                            + "\"card_no\" : \"" + etvtCardNo.getText().toString() + "\","
-                            + "\"mm\" : \"" + etxtMM.getText().toString() + "\","
-                            + "\"yy\" : \"" + etxtYY.getText().toString() + "\","
-                            + "\"cvc\" : \"" + etxtCVC.getText().toString() + "\","
-                            + "\"account_name\" : \"" + etxtBillingAccountFullname.getText().toString() + "\","
-                            + "\"address_line_a\" : \"" + etxtBillingAccountAddress.getText().toString() + "\","
-                            + "\"address_line_b\" : \"" + etxtBillingAccountAddress2.getText().toString() + "\","
-                            + "\"city\" : \"" + etxtBillingAccountCity.getText().toString() + "\","
-                            + "\"state\" : \"" + etxtBillingAccountState.getText().toString() + "\","
-                            + "\"zip\" : \"" + etxtBillingAccountZip.getText().toString() + "\","
-                            + "\"country\" : \"" + spnCountry.getSelectedItem().toString() + "\""
-                        + "}";
+
                         Log.d("json", json);
                         RequestBody body = RequestBody.create(JSON, json);
                         Request request = new Request.Builder()

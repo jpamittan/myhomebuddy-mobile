@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ConsumerProductReviewActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/txtvRateProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rate product:" />
+
+            <RatingBar
+                android:id="@+id/rbRateProduct"
+                style="@style/Widget.AppCompat.RatingBar.Indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="false"
+                android:numStars="5"
+                android:progressTint="#FFC107"
+                android:stepSize=".5" />
+
+            <TextView
+                android:id="@+id/txtvProductReviewMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Review message:" />
+
+            <EditText
+                android:id="@+id/etxtmReviewMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                android:minLines="6" />
+
+            <Button
+                android:id="@+id/btnSubmitProductReview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#009688"
+                android:drawableLeft="@android:drawable/ic_menu_send"
+                android:text="Submit" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

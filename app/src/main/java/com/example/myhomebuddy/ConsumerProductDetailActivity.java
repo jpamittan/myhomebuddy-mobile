@@ -88,7 +88,7 @@ public class ConsumerProductDetailActivity extends AppCompatActivity {
         txtvSellerAddress3 = findViewById(R.id.txtvSellerAddress3);
         txtvCCutomerNoReviews = findViewById(R.id.txtvCCutomerNoReviews);
         lvCCustomerReviews = findViewById(R.id.lvCCustomerReviews);
-        btnSubmitReview = findViewById(R.id.btnSubmitReview);
+        btnSubmitReview = findViewById(R.id.btnSubmitProductReview);
         btnPlaceOrder = findViewById(R.id.btnPlaceOrder);
 
         Intent intent = getIntent();
@@ -108,6 +108,15 @@ public class ConsumerProductDetailActivity extends AppCompatActivity {
         reviews = new ArrayList<>();
 
         fetchProduct(productId);
+
+        btnSubmitReview.setOnClickListener(v -> {
+            Intent review = new Intent(
+                this,
+                ConsumerProductReviewActivity.class
+            );
+            review.putExtra("id", productId);
+            startActivityForResult(review, 1);
+        });
     }
 
     private void fetchProduct(int productId) {
@@ -238,4 +247,15 @@ public class ConsumerProductDetailActivity extends AppCompatActivity {
             ).show();
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if(resultCode == ConsumerProductReviewActivity.RESULT_OK){
+                fetchProduct(productId);
+            }
+        }
+    }//onActivityResult
 }
