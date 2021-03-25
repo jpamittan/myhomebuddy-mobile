@@ -343,4 +343,8 @@
         <item>Weekly</item>
         <item>Monthly</item>
     </string-array>
+    <string-array name="mode_payment">
+        <item>Cash on delivery</item>
+        <item>Credit/Debit</item>
+    </string-array>
 </resources>

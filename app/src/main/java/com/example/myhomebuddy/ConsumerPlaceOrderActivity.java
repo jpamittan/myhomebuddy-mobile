@@ -29,6 +29,8 @@ public class ConsumerPlaceOrderActivity extends AppCompatActivity {
 
     int productId;
     float productPrice;
+    String productImage;
+    String productName;
     int qtyCtr = 0;
     private Boolean blnProceedRegister;
     String dateFrom;
@@ -207,8 +209,8 @@ public class ConsumerPlaceOrderActivity extends AppCompatActivity {
         Intent intent = getIntent();
         productId = intent.getIntExtra("id", 0);
         productPrice = intent.getFloatExtra("productPrice", 0);
-        Log.i("ID", String.valueOf(productId));
-        Log.i("Price", String.valueOf(productPrice));
+        productImage = intent.getStringExtra("productImage");
+        productName = intent.getStringExtra("productName");
 
         spnFrequency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -291,8 +293,6 @@ public class ConsumerPlaceOrderActivity extends AppCompatActivity {
                 errMsg = "No day selected.";
                 blnProceedRegister = false;
             } else {
-                Log.d("From", dateFrom);
-                Log.d("To", dateto);
                 try {
                     startDate = formatter.parse(str_date);
                     endDate = formatter.parse(end_date);
@@ -326,7 +326,10 @@ public class ConsumerPlaceOrderActivity extends AppCompatActivity {
                         // Monthly
                         cal.setTime(d);
                         for (int i = 0; i < selectedDays.size(); i++) {
-                            if (selectedDays.get(i).equals(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)))) {
+                            if (
+                                selectedDays.get(i)
+                                    .equals(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)))
+                            ) {
                                 dates.add(formatter.format(d));
                                 dateTimes.add(times.get(i));
                                 datePcs.add(pcs.get(i));
@@ -345,23 +348,18 @@ public class ConsumerPlaceOrderActivity extends AppCompatActivity {
                 }
 
                 float total_amount = productPrice * qtyCtr;
-                String json = "{"
-                        + "\"product_id\" : \"" + productId + "\","
-                        + "\"subscription_from\" : \"" + dateFrom + "\","
-                        + "\"subscription_to\" : \"" + dateto + "\","
-                        + "\"frequency\" : \"" + spnFrequency.getSelectedItem().toString() + "\","
-                        + "\"delivery_days\" : " + delivery_days + ","
-                        + "\"total_quantity\" : " + qtyCtr + ","
-                        + "\"total_amount\" : " + total_amount + ""
-                        + "}";
-                Log.d("json", json);
 
                 Intent checkout = new Intent(this, ConsumerCheckoutMainActivity.class);
                 checkout.putExtra("productId", productId);
-                checkout.putExtra("productPrice", productPrice);
+                checkout.putExtra("dateFrom", dateFrom);
+                checkout.putExtra("dateto", dateto);
+                checkout.putExtra("frequency", spnFrequency.getSelectedItem().toString());
+                checkout.putExtra("delivery_days", delivery_days);
                 checkout.putExtra("total_quantity", qtyCtr);
                 checkout.putExtra("total_amount", total_amount);
-                checkout.putExtra("json", json);
+                checkout.putExtra("productPrice", productPrice);
+                checkout.putExtra("productImage", productImage);
+                checkout.putExtra("productName", productName);
                 checkout.putStringArrayListExtra("dates", dates);
                 checkout.putStringArrayListExtra("dateTimes", dateTimes);
                 checkout.putIntegerArrayListExtra("datePcs", datePcs);

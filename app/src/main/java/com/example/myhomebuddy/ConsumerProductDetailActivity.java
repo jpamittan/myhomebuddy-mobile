@@ -68,6 +68,8 @@ public class ConsumerProductDetailActivity extends AppCompatActivity {
     ReviewItemAdapter reviewItemAdapter;
     int productId;
     float productPrice;
+    String productImage;
+    String productName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +128,8 @@ public class ConsumerProductDetailActivity extends AppCompatActivity {
             );
             order.putExtra("id", productId);
             order.putExtra("productPrice", productPrice);
+            order.putExtra("productImage", productImage);
+            order.putExtra("productName", productName);
             startActivityForResult(order, 1);
         });
     }
@@ -181,8 +185,10 @@ public class ConsumerProductDetailActivity extends AppCompatActivity {
                             runOnUiThread(() -> {
                                 progress.dismiss();
                                 try {
+                                    productImage = data.getString("image");
                                     Picasso.get().load(data.getString("image"))
                                         .into(imgvCProductDetailsImage);
+                                    productName = data.getString("name");
                                     etxtCProductDetailsName.setText(data.getString("name"));
                                     etxtmCProductDetailsDesc.setText(
                                         data.getString("description")

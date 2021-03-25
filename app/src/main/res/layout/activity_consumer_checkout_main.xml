@@ -6,4 +6,203 @@
     android:layout_height="match_parent"
     tools:context=".ConsumerCheckoutMainActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/txtvOrderTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:text="Order Review"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imgvCheckoutProductImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="10dp"
+                android:scaleType="fitCenter"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/txtvCheckoutName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name:" />
+
+            <TextView
+                android:id="@+id/txtvCheckoutPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Price:" />
+
+            <TextView
+                android:id="@+id/txtvSchedulesTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Scheduled for delivery"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/lvCheckoutSchedules"
+                android:layout_width="match_parent"
+                android:layout_height="299dp" />
+
+            <TextView
+                android:id="@+id/txtvCheckoutTotalTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Total"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtvCheckoutQty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Quantity:" />
+
+            <TextView
+                android:id="@+id/txtvCheckoutAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Amount:" />
+
+            <TextView
+                android:id="@+id/txtvCheckoutModePaymentTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Mode of payment:"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spnModePayment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/mode_payment" />
+
+            <LinearLayout
+                android:id="@+id/llCreditDebit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/etCheckoutName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Cardholder's name"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/etCheckoutCardNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Card no"
+                    android:inputType="number" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/etCheckoutMM"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="MM"
+                        android:inputType="number" />
+
+                    <EditText
+                        android:id="@+id/etCheckoutYY"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="YY"
+                        android:inputType="number" />
+
+                    <EditText
+                        android:id="@+id/etCheckoutCVC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="CVC"
+                        android:inputType="number" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/etCheckoutAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Address"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/etCheckoutAddress2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:ems="10"
+                    android:hint="Address line 2"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/etCheckoutCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="City"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/etCheckoutState"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="State"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/etCheckoutZip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Zip"
+                    android:inputType="textPersonName" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnCheckout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="#009688"
+                android:drawableLeft="@drawable/ic_credit_card_regular"
+                android:text="Checkout" />
+
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -309,36 +309,38 @@ public class SellerBillingAccountActivity extends AppCompatActivity {
                                 }
                             });
                         } else {
-                            JSONObject data = joProduct.getJSONObject("data");
-                            Log.i("Product", data.toString());
+                            if (!joProduct.isNull("data")) {
+                                JSONObject data = joProduct.getJSONObject("data");
+                                Log.i("Product", data.toString());
 
-                            runOnUiThread(() -> {
-                                progress.dismiss();
-                                try {
-                                    ArrayList<String> accountTypes = retrieveAllItems(spnAccountType);
-                                    spnAccountType.setSelection(
-                                            accountTypes.indexOf(data.getString("account_type"))
-                                    );
-                                    String cardNo = data.getString("card_no");
-                                    cardNo = cardNo.substring(cardNo.length() - 4);
-                                    txtvCardNo.setText("Mobile / Card no: ****" + cardNo);
-                                    etxtBillingAccountAddress.setText(
-                                            data.getString("address_line_a")
-                                    );
-                                    etxtBillingAccountAddress2.setText(
-                                            data.getString("address_line_b")
-                                    );
-                                    etxtBillingAccountCity.setText(data.getString("city"));
-                                    etxtBillingAccountState.setText(data.getString("state"));
-                                    etxtBillingAccountZip.setText(data.getString("zip"));
-                                    ArrayList<String> countries = retrieveAllItems(spnCountry);
-                                    spnCountry.setSelection(
-                                        countries.indexOf(data.getString("country"))
-                                    );
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            });
+                                runOnUiThread(() -> {
+                                    progress.dismiss();
+                                    try {
+                                        ArrayList<String> accountTypes = retrieveAllItems(spnAccountType);
+                                        spnAccountType.setSelection(
+                                                accountTypes.indexOf(data.getString("account_type"))
+                                        );
+                                        String cardNo = data.getString("card_no");
+                                        cardNo = cardNo.substring(cardNo.length() - 4);
+                                        txtvCardNo.setText("Mobile / Card no: ****" + cardNo);
+                                        etxtBillingAccountAddress.setText(
+                                                data.getString("address_line_a")
+                                        );
+                                        etxtBillingAccountAddress2.setText(
+                                                data.getString("address_line_b")
+                                        );
+                                        etxtBillingAccountCity.setText(data.getString("city"));
+                                        etxtBillingAccountState.setText(data.getString("state"));
+                                        etxtBillingAccountZip.setText(data.getString("zip"));
+                                        ArrayList<String> countries = retrieveAllItems(spnCountry);
+                                        spnCountry.setSelection(
+                                                countries.indexOf(data.getString("country"))
+                                        );
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                });
+                            }
                         }
                     } catch (JSONException e) {
                         Log.e("Ex", Log.getStackTraceString(e));
