@@ -2,6 +2,7 @@ package com.example.myhomebuddy.ui.schedule;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.myhomebuddy.ConsumerOrderDetailActivity;
+import com.example.myhomebuddy.ConsumerProductDetailActivity;
 import com.example.myhomebuddy.OrderItemAdapter;
 import com.example.myhomebuddy.ProductItemAdapter;
 import com.example.myhomebuddy.R;
@@ -36,8 +39,8 @@ import okhttp3.ResponseBody;
 
 public class ScheduleFragment extends Fragment {
 
-    private static final String host = "192.168.254.101:8000";
-    //    private static final String host = "ec2-54-89-125-177.compute-1.amazonaws.com";
+//    private static final String host = "192.168.254.101:8000";
+    private static final String host = "ec2-54-89-125-177.compute-1.amazonaws.com";
     public static final String SHARED_PREFS_TOKEN = "sharedPrefsToken";
     public static final String TOKEN = "token";
     public static final String TOKEN_TYPE = "token_type";
@@ -68,6 +71,12 @@ public class ScheduleFragment extends Fragment {
         progress.show();
 
         fetchOrders();
+
+        lvSchedule.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = new Intent(getActivity(), ConsumerOrderDetailActivity.class);
+            intent.putExtra("id", orders.get(position).getId());
+            startActivity(intent);
+        });
 
         return root;
     }
