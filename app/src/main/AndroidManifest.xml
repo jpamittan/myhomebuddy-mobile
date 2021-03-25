@@ -16,6 +16,13 @@
         android:theme="@style/Theme.MyHomeBuddy.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup">
+        <activity android:name=".ConsumerCheckoutMainActivity"
+            android:label="@string/checkout"
+            android:theme="@style/Theme.MyHomeBuddy"/>
+        <activity
+            android:name=".ConsumerPlaceOrderActivity"
+            android:label="@string/place_order"
+            android:theme="@style/Theme.MyHomeBuddy" />
         <activity
             android:name=".ConsumerProductReviewActivity"
             android:label="@string/product_review"

@@ -38,8 +38,8 @@ import okhttp3.ResponseBody;
 
 public class ConsumerProductDetailActivity extends AppCompatActivity {
 
-//    private static final String host = "192.168.254.101:8000";
-    private static final String host = "ec2-54-89-125-177.compute-1.amazonaws.com";
+    private static final String host = "192.168.254.101:8000";
+//    private static final String host = "ec2-54-89-125-177.compute-1.amazonaws.com";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     public static final String SHARED_PREFS_TOKEN = "sharedPrefsToken";
     public static final String TOKEN = "token";
@@ -67,6 +67,7 @@ public class ConsumerProductDetailActivity extends AppCompatActivity {
     ArrayList<Reviews> reviews;
     ReviewItemAdapter reviewItemAdapter;
     int productId;
+    float productPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +117,16 @@ public class ConsumerProductDetailActivity extends AppCompatActivity {
             );
             review.putExtra("id", productId);
             startActivityForResult(review, 1);
+        });
+
+        btnPlaceOrder.setOnClickListener(v -> {
+            Intent order = new Intent(
+                    this,
+                    ConsumerPlaceOrderActivity.class
+            );
+            order.putExtra("id", productId);
+            order.putExtra("productPrice", productPrice);
+            startActivityForResult(order, 1);
         });
     }
 
@@ -173,27 +184,45 @@ public class ConsumerProductDetailActivity extends AppCompatActivity {
                                     Picasso.get().load(data.getString("image"))
                                         .into(imgvCProductDetailsImage);
                                     etxtCProductDetailsName.setText(data.getString("name"));
-                                    etxtmCProductDetailsDesc.setText(data.getString("description"));
-                                    Float rt = Float.parseFloat(data.getString("ratings"));
+                                    etxtmCProductDetailsDesc.setText(
+                                        data.getString("description")
+                                    );
+                                    float rt = Float.parseFloat(data.getString("ratings"));
                                     txtvCProductDetailsRatings.setText("Ratings: (" + rt + ")");
                                     rbCProductDetails.setRating(rt);
-                                    txtvCProductDetailsCategory.setText("Category: " + data.getString("category"));
-                                    txtvCProductDetailsSubCategory.setText("Sub-category: " + data.getString("sub_category"));
-                                    txtvCProductDetailsPrice.setText("Price: ₱" + data.getString("price"));
+                                    txtvCProductDetailsCategory.setText(
+                                        "Category: " + data.getString("category")
+                                    );
+                                    txtvCProductDetailsSubCategory.setText(
+                                        "Sub-category: " + data.getString("sub_category")
+                                    );
+                                    productPrice = Float.parseFloat(data.getString("price"));
+                                    txtvCProductDetailsPrice.setText(
+                                        "Price: ₱" + data.getString("price")
+                                    );
                                     if (data.getInt("quantity") > 0) {
                                         txtvCProductDetailsQuantity.setText("Available");
-                                        txtvCProductDetailsQuantity.setTextColor(Color.parseColor("#28B463"));
+                                        txtvCProductDetailsQuantity.setTextColor(
+                                            Color.parseColor("#28B463")
+                                        );
                                     } else {
                                         txtvCProductDetailsQuantity.setText("Out of stock");
-                                        txtvCProductDetailsQuantity.setTextColor(Color.parseColor("#E74C3C"));
+                                        txtvCProductDetailsQuantity.setTextColor(
+                                            Color.parseColor("#E74C3C")
+                                        );
                                         runOnUiThread(() -> btnPlaceOrder.setVisibility(View.GONE));
                                     }
                                     JSONObject joSeller = data.getJSONObject("seller");
-                                    JSONObject joProperties = new JSONObject(joSeller.getString("properties"));
+                                    JSONObject joProperties =
+                                        new JSONObject(joSeller.getString("properties"));
                                     JSONObject joBusiness = joProperties.getJSONObject("business");
                                     JSONObject joAddress = joProperties.getJSONObject("address");
-                                    txtvSellerName.setText("Name: " + joBusiness.getString("name"));
-                                    txtvSellerAddress.setText("Address: " + joAddress.getString("unit"));
+                                    txtvSellerName.setText(
+                                        "Name: " + joBusiness.getString("name")
+                                    );
+                                    txtvSellerAddress.setText(
+                                        "Address: " + joAddress.getString("unit")
+                                    );
                                     txtvSellerAddress2.setText(
                                         joAddress.getString("street") + ", "
                                         + joAddress.getString("barangay")
@@ -211,7 +240,10 @@ public class ConsumerProductDetailActivity extends AppCompatActivity {
                                         reviews.add(new Reviews(
                                             jaReviews.getJSONObject(i).getInt("id"),
                                             jaReviews.getJSONObject(i).getJSONObject("user"),
-                                            Float.parseFloat(jaReviews.getJSONObject(i).getString("ratings")),
+                                            Float.parseFloat(
+                                                jaReviews.getJSONObject(i)
+                                                    .getString("ratings")
+                                            ),
                                             jaReviews.getJSONObject(i).getString("message"),
                                             jaReviews.getJSONObject(i).getString("created_at")
                                         ));
@@ -221,7 +253,9 @@ public class ConsumerProductDetailActivity extends AppCompatActivity {
                                             R.layout.fragment_reviews_item,
                                             reviews
                                     );
-                                    runOnUiThread(() -> lvCCustomerReviews.setAdapter(reviewItemAdapter));
+                                    runOnUiThread(() -> {
+                                        lvCCustomerReviews.setAdapter(reviewItemAdapter);
+                                    });
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -254,6 +288,9 @@ public class ConsumerProductDetailActivity extends AppCompatActivity {
 
         if (requestCode == 1) {
             if(resultCode == ConsumerProductReviewActivity.RESULT_OK){
+                fetchProduct(productId);
+            }
+            if(resultCode == ConsumerCheckoutMainActivity.RESULT_OK){
                 fetchProduct(productId);
             }
         }
