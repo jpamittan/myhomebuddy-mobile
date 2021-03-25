@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -42,8 +43,8 @@ import okhttp3.Response;
 public class ConsumerCheckoutMainActivity extends AppCompatActivity {
 
     private Boolean blnProceedRegister = true;
-    private static final String host = "192.168.254.101:8000";
-    //    private static final String host = "ec2-54-89-125-177.compute-1.amazonaws.com";
+//    private static final String host = "192.168.254.101:8000";
+    private static final String host = "ec2-54-89-125-177.compute-1.amazonaws.com";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     public static final String SHARED_PREFS_TOKEN = "sharedPrefsToken";
     public static final String TOKEN = "token";
@@ -99,6 +100,10 @@ public class ConsumerCheckoutMainActivity extends AppCompatActivity {
         etCheckoutState = findViewById(R.id.etCheckoutState);
         etCheckoutZip = findViewById(R.id.etCheckoutZip);
         btnCheckout = findViewById(R.id.btnCheckout);
+
+        SharedPreferences shared = getSharedPreferences(SHARED_PREFS_TOKEN, MODE_PRIVATE);
+        token_type = shared.getString(TOKEN_TYPE, "Bearer");
+        token = (shared.getString(TOKEN, ""));
 
         Intent intent = getIntent();
         int productId = intent.getIntExtra("productId", 0);
@@ -192,11 +197,11 @@ public class ConsumerCheckoutMainActivity extends AppCompatActivity {
                         String orderSchedules = "[" + orderSchedulesSB.substring(0, orderSchedulesSB.length() - 1) + "]";
                         if (spnModePayment.getSelectedItem().toString().equals("Cash on delivery")) {
                             json = "{"
-                                + "\"product_id\" : \"" + productId + "\","
+                                + "\"product_id\" : " + productId + ","
                                 + "\"subscription_from\" : \"" + dateFrom + "\","
                                 + "\"subscription_to\" : \"" + dateto + "\","
                                 + "\"frequency\" : \"" + frequency + "\","
-                                + "\"delivery_days\" : \"" + delivery_days + "\","
+                                + "\"delivery_days\" : " + delivery_days + ","
                                 + "\"total_quantity\" : " + total_quantity + ","
                                 + "\"total_amount\" : " + total_amount + ","
                                 + "\"payment_method\" : \"" + spnModePayment.getSelectedItem().toString() + "\","
@@ -216,7 +221,7 @@ public class ConsumerCheckoutMainActivity extends AppCompatActivity {
                                 + "\"zip\" : \"" + etCheckoutZip.getText().toString() + "\""
                             + "}";
                             json = "{"
-                                + "\"product_id\" : \"" + productId + "\","
+                                + "\"product_id\" : " + productId + ","
                                 + "\"subscription_from\" : \"" + dateFrom + "\","
                                 + "\"subscription_to\" : \"" + dateto + "\","
                                 + "\"frequency\" : \"" + frequency + "\","
@@ -254,11 +259,11 @@ public class ConsumerCheckoutMainActivity extends AppCompatActivity {
                                         if (response.code() == 201) {
                                             new Handler(Looper.getMainLooper()).post(() -> {
                                                 progress.dismiss();
-                                                Intent returnIntent = new Intent();
-                                                setResult(
-                                                    ConsumerCheckoutMainActivity.RESULT_OK,
-                                                    returnIntent
+                                                Intent checkoutResult = new Intent(
+                                                    ConsumerCheckoutMainActivity.this,
+                                                    ConsumerCheckoutResultActivity.class
                                                 );
+                                                startActivity(checkoutResult);
                                                 finish();
                                             });
                                         }

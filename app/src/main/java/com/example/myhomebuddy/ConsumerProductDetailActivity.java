@@ -38,8 +38,8 @@ import okhttp3.ResponseBody;
 
 public class ConsumerProductDetailActivity extends AppCompatActivity {
 
-    private static final String host = "192.168.254.101:8000";
-//    private static final String host = "ec2-54-89-125-177.compute-1.amazonaws.com";
+//    private static final String host = "192.168.254.101:8000";
+    private static final String host = "ec2-54-89-125-177.compute-1.amazonaws.com";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     public static final String SHARED_PREFS_TOKEN = "sharedPrefsToken";
     public static final String TOKEN = "token";
@@ -130,7 +130,7 @@ public class ConsumerProductDetailActivity extends AppCompatActivity {
             order.putExtra("productPrice", productPrice);
             order.putExtra("productImage", productImage);
             order.putExtra("productName", productName);
-            startActivityForResult(order, 1);
+            startActivity(order);
         });
     }
 
@@ -294,9 +294,6 @@ public class ConsumerProductDetailActivity extends AppCompatActivity {
 
         if (requestCode == 1) {
             if(resultCode == ConsumerProductReviewActivity.RESULT_OK){
-                fetchProduct(productId);
-            }
-            if(resultCode == ConsumerCheckoutMainActivity.RESULT_OK){
                 fetchProduct(productId);
             }
         }
