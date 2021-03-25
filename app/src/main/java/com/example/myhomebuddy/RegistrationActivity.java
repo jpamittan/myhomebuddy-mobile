@@ -1,8 +1,10 @@
 package com.example.myhomebuddy;
 
 import android.os.Bundle;
-import androidx.viewpager.widget.ViewPager;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
 import com.example.myhomebuddy.ui.main.SectionsPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 

@@ -1,7 +1,5 @@
 package com.example.myhomebuddy;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,6 +15,8 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myhomebuddy.ui.reviews.Reviews;
 import com.squareup.picasso.Picasso;

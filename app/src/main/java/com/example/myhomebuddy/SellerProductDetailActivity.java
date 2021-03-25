@@ -25,7 +25,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myhomebuddy.ui.products.Products;
 import com.example.myhomebuddy.ui.reviews.Reviews;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;

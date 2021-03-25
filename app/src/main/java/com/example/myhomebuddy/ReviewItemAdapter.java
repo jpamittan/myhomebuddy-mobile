@@ -14,12 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.myhomebuddy.ui.reviews.Reviews;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ReviewItemAdapter extends ArrayAdapter<Reviews> {

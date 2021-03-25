@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/imgvOrderItemImage"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:scaleType="fitCenter"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/txtvOrderItemName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_toEndOf="@id/imgvOrderItemImage"
+        android:text="Item name"
+        android:textColor="#3F51B5"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtvOrderItemSeller"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtvOrderItemName"
+        android:layout_alignLeft="@id/txtvOrderItemName"
+        android:layout_toEndOf="@id/txtvOrderItemName"
+        android:text="qty"
+        android:textColor="#303030" />
+
+    <TextView
+        android:id="@+id/txtvOrderItemCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtvOrderItemSeller"
+        android:layout_alignLeft="@id/txtvOrderItemName"
+        android:layout_toEndOf="@id/txtvOrderItemName"
+        android:text="qty"
+        android:textColor="#303030"
+        android:textSize="10sp"
+        android:textStyle="italic" />
+
+</RelativeLayout>
