@@ -16,10 +16,11 @@
         android:theme="@style/Theme.MyHomeBuddy.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup">
+        <activity android:name=".SellerOrderScheduleDetailsActivity"></activity>
         <activity
             android:name=".SellerOrderDetailActivity"
             android:label="@string/order_details"
-            android:theme="@style/Theme.MyHomeBuddy"/>
+            android:theme="@style/Theme.MyHomeBuddy" />
         <activity
             android:name=".SellerOrdersActivity"
             android:label="@string/my_orders"

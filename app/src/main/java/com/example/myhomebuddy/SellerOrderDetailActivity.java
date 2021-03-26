@@ -33,8 +33,8 @@ import okhttp3.ResponseBody;
 
 public class SellerOrderDetailActivity extends AppCompatActivity {
 
-    private static final String host = "192.168.254.101:8000";
-//    private static final String host = "ec2-54-89-125-177.compute-1.amazonaws.com";
+//    private static final String host = "192.168.254.101:8000";
+    private static final String host = "ec2-54-89-125-177.compute-1.amazonaws.com";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     public static final String SHARED_PREFS_TOKEN = "sharedPrefsToken";
     public static final String TOKEN = "token";
@@ -58,6 +58,11 @@ public class SellerOrderDetailActivity extends AppCompatActivity {
     TextView txtvSOrderQty;
     TextView txtvSOrderTotalPrice;
     ListView lvSOrderSchedules;
+    ArrayList<Integer> orderScheduleIds;
+    ArrayList<String> orderScheduleDates;
+    ArrayList<String> orderScheduleTimes;
+    ArrayList<String> orderScheduleQtys;
+    ArrayList<String> orderScheduleAmts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +93,12 @@ public class SellerOrderDetailActivity extends AppCompatActivity {
         token_type = shared.getString(TOKEN_TYPE, "Bearer");
         token = (shared.getString(TOKEN, ""));
 
+        orderScheduleIds = new ArrayList<>();
+        orderScheduleDates = new ArrayList<>();
+        orderScheduleTimes = new ArrayList<>();
+        orderScheduleQtys = new ArrayList<>();
+        orderScheduleAmts = new ArrayList<>();
+
         progress = new ProgressDialog(this);
         progress.setTitle("Loading");
         progress.setMessage("Please wait...");
@@ -100,6 +111,19 @@ public class SellerOrderDetailActivity extends AppCompatActivity {
             Intent prodDetails = new Intent(this, SellerProductDetailActivity.class);
             prodDetails.putExtra("id",productId);
             startActivity(prodDetails);
+        });
+
+        lvSOrderSchedules.setOnItemClickListener((parent, view, position, id) -> {
+            Intent scheduleDetails = new Intent(
+                this,
+                SellerOrderScheduleDetailsActivity.class
+            );
+            scheduleDetails.putExtra("id", orderScheduleIds.get(position));
+            scheduleDetails.putExtra("date", orderScheduleDates.get(position));
+            scheduleDetails.putExtra("time", orderScheduleTimes.get(position));
+            scheduleDetails.putExtra("qty", orderScheduleQtys.get(position));
+            scheduleDetails.putExtra("amt", orderScheduleAmts.get(position));
+            startActivityForResult(scheduleDetails, 1);
         });
     }
 
@@ -155,10 +179,12 @@ public class SellerOrderDetailActivity extends AppCompatActivity {
                                 progress.dismiss();
                                 try {
                                     Picasso.get()
-                                        .load(data.getJSONObject("product").getString("image"))
+                                        .load(data.getJSONObject("product")
+                                            .getString("image"))
                                         .into(imgvSOrderProductImage);
                                     txtvSOrderProductName.setText(
-                                        "Name: " + data.getJSONObject("product").getString("name")
+                                        "Name: " + data.getJSONObject("product")
+                                            .getString("name")
                                     );
                                     txtvSOrderProductCategory.setText(
                                         "Category: " + data.getJSONObject("product")
@@ -174,7 +200,7 @@ public class SellerOrderDetailActivity extends AppCompatActivity {
                                     );
                                     JSONObject joConsumer = data.getJSONObject("consumer");
                                     JSONObject joProperties =
-                                            new JSONObject(joConsumer.getString("properties"));
+                                        new JSONObject(joConsumer.getString("properties"));
                                     JSONObject joAddress = joProperties.getJSONObject("address");
                                     txtvSOrderConsumerName.setText(
                                         "Name: " + joConsumer.getString("first_name") + " " +
@@ -209,15 +235,34 @@ public class SellerOrderDetailActivity extends AppCompatActivity {
                                         "Total amount: " + data.getString("total_amount")
                                     );
 
+                                    orderScheduleIds.clear();
+                                    orderScheduleDates.clear();
+                                    orderScheduleTimes.clear();
+                                    orderScheduleQtys.clear();
+                                    orderScheduleAmts.clear();
                                     JSONArray jaOrders = data.getJSONArray("order_schedules");
                                     ArrayList<String> listSchedules = new ArrayList<>();
                                     for(int i = 0; i < jaOrders.length(); i++){
+                                        orderScheduleIds.add(jaOrders.getJSONObject(i)
+                                            .getInt("id"));
+                                        orderScheduleDates.add(jaOrders.getJSONObject(i)
+                                            .getString("schedule_date"));
+                                        orderScheduleTimes.add(jaOrders.getJSONObject(i)
+                                            .getString("schedule_time"));
+                                        orderScheduleQtys.add(jaOrders.getJSONObject(i)
+                                            .getString("qty"));
+                                        orderScheduleAmts.add(jaOrders.getJSONObject(i)
+                                            .getString("total_amount"));
                                         listSchedules.add(
                                             (i + 1)
-                                            + ".  Date: " + jaOrders.getJSONObject(i).getString("schedule_date")
-                                            + "  Time: " + jaOrders.getJSONObject(i).getString("schedule_time")
-                                            + "  Pc(s): " + jaOrders.getJSONObject(i).getString("qty")
-                                            + "  Price: ₱" + jaOrders.getJSONObject(i).getString("total_amount")
+                                            + ".  Date: " + jaOrders.getJSONObject(i)
+                                                .getString("schedule_date")
+                                            + "  Time: " + jaOrders.getJSONObject(i)
+                                                .getString("schedule_time")
+                                            + "  Pc(s): " + jaOrders.getJSONObject(i)
+                                                .getString("qty")
+                                            + "  Price: ₱" + jaOrders.getJSONObject(i)
+                                                .getString("total_amount")
                                         );
                                     }
                                     ArrayAdapter<String> adapter = new ArrayAdapter<>(
@@ -252,4 +297,15 @@ public class SellerOrderDetailActivity extends AppCompatActivity {
             ).show();
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if(resultCode == SellerOrderScheduleDetailsActivity.RESULT_OK){
+                fetchOrder(productId);
+            }
+        }
+    }//onActivityResult
 }
