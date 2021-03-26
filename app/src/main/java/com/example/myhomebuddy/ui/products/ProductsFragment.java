@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.example.myhomebuddy.ConsumerProductDetailActivity;
 import com.example.myhomebuddy.ProductItemAdapter;
 import com.example.myhomebuddy.R;
+import com.example.myhomebuddy.SearchActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +43,7 @@ public class ProductsFragment extends Fragment {
     public static final String TOKEN = "token";
     public static final String TOKEN_TYPE = "token_type";
     View root;
+    SearchView svSellerProducts;
     ListView lvProducts;
     ProductItemAdapter productItemAdapter;
     ProgressDialog progress;
@@ -51,6 +54,7 @@ public class ProductsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_products, container, false);
+        svSellerProducts = root.findViewById(R.id.svSellerProducts);
         lvProducts = root.findViewById(R.id.lvProducts);
         products = new ArrayList<>();
 
@@ -68,6 +72,21 @@ public class ProductsFragment extends Fragment {
         progress.show();
 
         fetchProducts();
+
+        svSellerProducts.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                intent.putExtra("search", query);
+                startActivity(intent);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         lvProducts.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent = new Intent(getActivity(), ConsumerProductDetailActivity.class);
