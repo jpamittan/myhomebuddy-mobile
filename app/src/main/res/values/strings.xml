@@ -26,6 +26,7 @@
     <string name="place_order">Place order</string>
     <string name="checkout">Checkout</string>
     <string name="order_details">Order Details</string>
+    <string name="my_orders">My Orders</string>
     <string name="terms_conditions_consumers">
         <a href="http://ec2-54-89-125-177.compute-1.amazonaws.com/terms/consumers">Terms and Conditions</a>
     </string>

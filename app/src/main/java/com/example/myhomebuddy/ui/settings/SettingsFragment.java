@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.myhomebuddy.R;
-import com.example.myhomebuddy.SellerMainActivity;
 import com.example.myhomebuddy.ui.login.LoginActivity;
 
 import org.json.JSONException;

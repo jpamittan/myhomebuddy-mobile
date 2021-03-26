@@ -16,12 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.myhomebuddy.ConsumerOrderDetailActivity;
-import com.example.myhomebuddy.ConsumerProductDetailActivity;
 import com.example.myhomebuddy.OrderItemAdapter;
-import com.example.myhomebuddy.ProductItemAdapter;
 import com.example.myhomebuddy.R;
-import com.example.myhomebuddy.ScheduleItemAdapter;
-import com.example.myhomebuddy.ui.products.Products;
 
 import org.json.JSONArray;
 import org.json.JSONException;

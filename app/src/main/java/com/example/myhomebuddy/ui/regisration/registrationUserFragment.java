@@ -1,13 +1,9 @@
 package com.example.myhomebuddy.ui.regisration;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.text.method.LinkMovementMethod;
@@ -22,6 +18,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.myhomebuddy.R;
 import com.example.myhomebuddy.RegistrationSuccessful;

@@ -18,7 +18,6 @@ import androidx.fragment.app.Fragment;
 import com.example.myhomebuddy.ConsumerProductDetailActivity;
 import com.example.myhomebuddy.ProductItemAdapter;
 import com.example.myhomebuddy.R;
-import com.example.myhomebuddy.SellerProductDetailActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -48,7 +48,7 @@ public class SellerMainActivity extends AppCompatActivity {
         });
 
         btnMyOrders.setOnClickListener(v -> {
-
+            startActivity(new Intent(this, SellerOrdersActivity.class));
         });
 
         btnBillingAccount.setOnClickListener(v -> {

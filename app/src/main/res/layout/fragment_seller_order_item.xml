@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/imgvSOrderProductItemImage"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/profile_image_placeholder"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/txtvSOrderProductItemName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_toEndOf="@id/imgvSOrderProductItemImage"
+        android:text="Consumer name"
+        android:textColor="#314198"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtvSOrderProductItemContact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtvSOrderProductItemName"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@id/imgvSOrderProductItemImage"
+        android:text="Email / Phone"
+        android:textColor="#303030"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/txtvSOrderProductItemLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtvSOrderProductItemName"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="22dp"
+        android:layout_toEndOf="@id/imgvSOrderProductItemImage"
+        android:text="Location"
+        android:textColor="#303030"
+        android:textSize="10sp"
+        android:textStyle="italic" />
+
+</RelativeLayout>

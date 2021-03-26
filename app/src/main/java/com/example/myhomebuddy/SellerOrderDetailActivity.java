@@ -31,10 +31,10 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class ConsumerOrderDetailActivity extends AppCompatActivity {
+public class SellerOrderDetailActivity extends AppCompatActivity {
 
-//    private static final String host = "192.168.254.101:8000";
-    private static final String host = "ec2-54-89-125-177.compute-1.amazonaws.com";
+    private static final String host = "192.168.254.101:8000";
+//    private static final String host = "ec2-54-89-125-177.compute-1.amazonaws.com";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     public static final String SHARED_PREFS_TOKEN = "sharedPrefsToken";
     public static final String TOKEN = "token";
@@ -43,36 +43,42 @@ public class ConsumerOrderDetailActivity extends AppCompatActivity {
     String token;
     ProgressDialog progress;
     int productId;
-    ImageView imgvOrderProductImage;
-    TextView txtvOrderProductName;
-    TextView txtvOrderProductCategory;
-    TextView txtvOrderProductSubCategory;
-    TextView txtvOrderProductPrice;
-    TextView txtvOrderSellerName;
-    TextView txtvOrderSellerAddress;
-    TextView txtvOrderSellerAddress2;
-    TextView txtvOrderSellerAddress3;
-    TextView txtvOrderQty;
-    TextView txtvOrderTotalPrice;
-    ListView lvOrderSchedules;
+    ImageView imgvSOrderProductImage;
+    TextView txtvSOrderProductName;
+    TextView txtvSOrderProductCategory;
+    TextView txtvSOrderProductSubCategory;
+    TextView txtvSOrderProductPrice;
+    TextView txtvSOrderConsumerName;
+    TextView txtvSOrderConsumerAddress;
+    TextView txtvSOrderConsumerAddress2;
+    TextView txtvSOrderConsumerAddress3;
+    TextView txtvSOrderConsumerEmail;
+    TextView txtvSOrderConsumerContact;
+    TextView txtvSOrderModePayment;
+    TextView txtvSOrderQty;
+    TextView txtvSOrderTotalPrice;
+    ListView lvSOrderSchedules;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_consumer_order_detail);
+        setContentView(R.layout.activity_seller_order_detail);
 
-        imgvOrderProductImage = findViewById(R.id.imgvOrderProductImage);
-        txtvOrderProductName = findViewById(R.id.txtvOrderProductName);
-        txtvOrderProductCategory = findViewById(R.id.txtvOrderProductCategory);
-        txtvOrderProductSubCategory = findViewById(R.id.txtvOrderProductSubCategory);
-        txtvOrderProductPrice = findViewById(R.id.txtvOrderProductPrice);
-        txtvOrderSellerName = findViewById(R.id.txtvOrderSellerName);
-        txtvOrderSellerAddress = findViewById(R.id.txtvOrderSellerAddress);
-        txtvOrderSellerAddress2 = findViewById(R.id.txtvOrderSellerAddress2);
-        txtvOrderSellerAddress3 = findViewById(R.id.txtvOrderSellerAddress3);
-        txtvOrderQty = findViewById(R.id.txtvOrderQty);
-        txtvOrderTotalPrice = findViewById(R.id.txtvOrderTotalPrice);
-        lvOrderSchedules = findViewById(R.id.lvOrderSchedules);
+        imgvSOrderProductImage = findViewById(R.id.imgvSOrderProductImage);
+        txtvSOrderProductName = findViewById(R.id.txtvSOrderProductName);
+        txtvSOrderProductCategory = findViewById(R.id.txtvSOrderProductCategory);
+        txtvSOrderProductSubCategory = findViewById(R.id.txtvSOrderProductSubCategory);
+        txtvSOrderProductPrice = findViewById(R.id.txtvSOrderProductPrice);
+        txtvSOrderConsumerName = findViewById(R.id.txtvSOrderConsumerName);
+        txtvSOrderConsumerAddress = findViewById(R.id.txtvSOrderConsumerAddress);
+        txtvSOrderConsumerAddress2 = findViewById(R.id.txtvSOrderConsumerAddress2);
+        txtvSOrderConsumerAddress3 = findViewById(R.id.txtvSOrderConsumerAddress3);
+        txtvSOrderConsumerEmail = findViewById(R.id.txtvSOrderConsumerEmail);
+        txtvSOrderConsumerContact = findViewById(R.id.txtvSOrderConsumerContact);
+        txtvSOrderModePayment = findViewById(R.id.txtvSOrderModePayment);
+        txtvSOrderQty = findViewById(R.id.txtvSOrderQty);
+        txtvSOrderTotalPrice = findViewById(R.id.txtvSOrderTotalPrice);
+        lvSOrderSchedules = findViewById(R.id.lvSOrderSchedules);
 
         Intent intent = getIntent();
         productId = intent.getIntExtra("id", 0);
@@ -90,10 +96,10 @@ public class ConsumerOrderDetailActivity extends AppCompatActivity {
 
         fetchOrder(productId);
 
-        txtvOrderProductName.setOnClickListener(v -> {
-            Intent prodIntent = new Intent(this, ConsumerProductDetailActivity.class);
-            prodIntent.putExtra("id", productId);
-            startActivity(prodIntent);
+        txtvSOrderProductName.setOnClickListener(v -> {
+            Intent prodDetails = new Intent(this, SellerProductDetailActivity.class);
+            prodDetails.putExtra("id",productId);
+            startActivity(prodDetails);
         });
     }
 
@@ -104,8 +110,8 @@ public class ConsumerOrderDetailActivity extends AppCompatActivity {
                 .header("Accept", "application/json")
                 .header("Content-Type", "application/json")
                 .header(
-                        "Authorization",
-                        token_type + " " + token
+                    "Authorization",
+                    token_type + " " + token
                 )
                 .url("http://" + host + "/api/order/" + productId)
                 .get()
@@ -116,9 +122,9 @@ public class ConsumerOrderDetailActivity extends AppCompatActivity {
                     Log.e("Fail", e.getMessage());
                     runOnUiThread(() -> {
                         progress.dismiss();
-                        Toast.makeText(ConsumerOrderDetailActivity.this,
-                            "An error has occured. Please try again.",
-                            Toast.LENGTH_LONG
+                        Toast.makeText(SellerOrderDetailActivity.this,
+                                "An error has occured. Please try again.",
+                                Toast.LENGTH_LONG
                         ).show();
                     });
                 }
@@ -133,7 +139,7 @@ public class ConsumerOrderDetailActivity extends AppCompatActivity {
                                 progress.dismiss();
                                 try {
                                     Toast.makeText(
-                                        ConsumerOrderDetailActivity.this,
+                                        SellerOrderDetailActivity.this,
                                         joProduct.getString("error"),
                                         Toast.LENGTH_LONG
                                     ).show();
@@ -150,46 +156,56 @@ public class ConsumerOrderDetailActivity extends AppCompatActivity {
                                 try {
                                     Picasso.get()
                                         .load(data.getJSONObject("product").getString("image"))
-                                        .into(imgvOrderProductImage);
-                                    txtvOrderProductName.setText(
+                                        .into(imgvSOrderProductImage);
+                                    txtvSOrderProductName.setText(
                                         "Name: " + data.getJSONObject("product").getString("name")
                                     );
-                                    txtvOrderProductCategory.setText(
+                                    txtvSOrderProductCategory.setText(
                                         "Category: " + data.getJSONObject("product")
-                                            .getString("category")
+                                                .getString("category")
                                     );
-                                    txtvOrderProductSubCategory.setText(
+                                    txtvSOrderProductSubCategory.setText(
                                         "Sub-category: " + data.getJSONObject("product")
-                                            .getString("sub_category")
+                                                .getString("sub_category")
                                     );
-                                    txtvOrderProductPrice.setText(
-                                            "Price: ₱" + data.getJSONObject("product")
+                                    txtvSOrderProductPrice.setText(
+                                        "Price: ₱" + data.getJSONObject("product")
                                                 .getString("price")
                                     );
-                                    JSONObject joSeller = data.getJSONObject("product")
-                                        .getJSONObject("seller");
+                                    JSONObject joConsumer = data.getJSONObject("consumer");
                                     JSONObject joProperties =
-                                        new JSONObject(joSeller.getString("properties"));
-                                    JSONObject joBusiness = joProperties.getJSONObject("business");
+                                            new JSONObject(joConsumer.getString("properties"));
                                     JSONObject joAddress = joProperties.getJSONObject("address");
-                                    txtvOrderSellerName.setText(
-                                        "Name: " + joBusiness.getString("name")
+                                    txtvSOrderConsumerName.setText(
+                                        "Name: " + joConsumer.getString("first_name") + " " +
+                                        joConsumer.getString("middle_name") + " " +
+                                        joConsumer.getString("last_name")
                                     );
-                                    txtvOrderSellerAddress.setText(
-                                        "Address: " + joAddress.getString("unit")
+                                    txtvSOrderConsumerAddress.setText(
+                                        "Address: " + joAddress.getString("unit") + " " +
+                                        joAddress.getString("subdivision")
                                     );
-                                    txtvOrderSellerAddress2.setText(
+                                    txtvSOrderConsumerAddress2.setText(
                                         joAddress.getString("street") + ", "
-                                                + joAddress.getString("barangay")
+                                        + joAddress.getString("barangay")
                                     );
-                                    txtvOrderSellerAddress3.setText(
+                                    txtvSOrderConsumerAddress3.setText(
                                         joAddress.getString("city") + ", "
-                                            + joAddress.getString("zip")
+                                        + joAddress.getString("zip")
                                     );
-                                    txtvOrderQty.setText(
+                                    txtvSOrderConsumerEmail.setText(
+                                        "Email: " + joConsumer.getString("email")
+                                    );
+                                    txtvSOrderConsumerContact.setText(
+                                        "Contact: " + joProperties.getString("phone_no")
+                                    );
+                                    txtvSOrderModePayment.setText(
+                                        "Mode of payment: " + data.getString("payment_method")
+                                    );
+                                    txtvSOrderQty.setText(
                                         "Quantity: " + data.getString("total_quantity")
                                     );
-                                    txtvOrderTotalPrice.setText(
+                                    txtvSOrderTotalPrice.setText(
                                         "Total amount: " + data.getString("total_amount")
                                     );
 
@@ -205,11 +221,11 @@ public class ConsumerOrderDetailActivity extends AppCompatActivity {
                                         );
                                     }
                                     ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                                        ConsumerOrderDetailActivity.this,
+                                        SellerOrderDetailActivity.this,
                                         android.R.layout.simple_list_item_1,
                                         listSchedules
                                     );
-                                    lvOrderSchedules.setAdapter(adapter);
+                                    lvSOrderSchedules.setAdapter(adapter);
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -219,9 +235,9 @@ public class ConsumerOrderDetailActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         Log.e("Ex", Log.getStackTraceString(e));
                         runOnUiThread(() -> {
-                            Toast.makeText(ConsumerOrderDetailActivity.this,
-                                "An error has occured. Please try again.",
-                                Toast.LENGTH_LONG
+                            Toast.makeText(SellerOrderDetailActivity.this,
+                                    "An error has occured. Please try again.",
+                                    Toast.LENGTH_LONG
                             ).show();
                         });
                     }

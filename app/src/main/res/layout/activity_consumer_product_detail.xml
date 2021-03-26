@@ -41,7 +41,6 @@
                 android:hint="Product Name"
                 android:inputType="textPersonName"
                 android:longClickable="false"
-                android:textColor="#000000"
                 android:textSize="14sp" />
 
             <EditText
@@ -152,7 +151,7 @@
             <ListView
                 android:id="@+id/lvCCustomerReviews"
                 android:layout_width="match_parent"
-                android:layout_height="230dp" />
+                android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/btnSubmitProductReview"

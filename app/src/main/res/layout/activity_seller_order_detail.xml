@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ConsumerOrderDetailActivity">
+    tools:context=".ui.SellerOrderDetailActivity">
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -19,72 +19,85 @@
             android:padding="10dp">
 
             <ImageView
-                android:id="@+id/imgvOrderProductImage"
+                android:id="@+id/imgvSOrderProductImage"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="fitCenter"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/txtvOrderProductName"
+                android:id="@+id/txtvSOrderProductName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Name:"
                 android:textColor="#2196F3" />
 
             <TextView
-                android:id="@+id/txtvOrderProductCategory"
+                android:id="@+id/txtvSOrderProductCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Category:" />
 
             <TextView
-                android:id="@+id/txtvOrderProductSubCategory"
+                android:id="@+id/txtvSOrderProductSubCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Sub-category:" />
 
             <TextView
-                android:id="@+id/txtvOrderProductPrice"
+                android:id="@+id/txtvSOrderProductPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Product price:" />
 
             <TextView
-                android:id="@+id/txtvOrderSellerInfo"
+                android:id="@+id/txtvSOrderConsumerInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
-                android:text="Seller Information"
+                android:text="Consumer Information"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txtvOrderSellerName"
+                android:id="@+id/txtvSOrderConsumerName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Name:" />
 
             <TextView
-                android:id="@+id/txtvOrderSellerAddress"
+                android:id="@+id/txtvSOrderConsumerAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Address:" />
 
             <TextView
-                android:id="@+id/txtvOrderSellerAddress2"
+                android:id="@+id/txtvSOrderConsumerAddress2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/txtvOrderSellerAddress3"
+                android:id="@+id/txtvSOrderConsumerAddress3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/txtvOrderDetails"
+                android:id="@+id/txtvSOrderConsumerEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Email:" />
+
+            <TextView
+                android:id="@+id/txtvSOrderConsumerContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Contact:" />
+
+            <TextView
+                android:id="@+id/txtvSOrderDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -94,19 +107,25 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txtvOrderQty"
+                android:id="@+id/txtvSOrderModePayment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mode of payment:" />
+
+            <TextView
+                android:id="@+id/txtvSOrderQty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Quantity:" />
 
             <TextView
-                android:id="@+id/txtvOrderTotalPrice"
+                android:id="@+id/txtvSOrderTotalPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Total price:" />
 
             <TextView
-                android:id="@+id/txtvOrderScheduleDeliveries"
+                android:id="@+id/txtvSOrderScheduleDeliveries"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -116,11 +135,10 @@
                 android:textStyle="bold" />
 
             <ListView
-                android:id="@+id/lvOrderSchedules"
+                android:id="@+id/lvSOrderSchedules"
                 android:layout_width="match_parent"
                 android:layout_height="230dp" />
 
         </LinearLayout>
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
