@@ -240,7 +240,7 @@ public class SellerOrderScheduleDetailsActivity extends AppCompatActivity {
                             });
                         } else {
                             runOnUiThread(() -> progress.dismiss());
-                            Log.i("Delete", jo.getString("message"));
+                            Log.i("Res", jo.toString());
                             Intent returnIntent = new Intent();
                             setResult(
                                 SellerOrderScheduleDetailsActivity.RESULT_OK,

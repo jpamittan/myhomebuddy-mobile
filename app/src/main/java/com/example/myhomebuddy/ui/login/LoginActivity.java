@@ -170,8 +170,8 @@ public class LoginActivity extends AppCompatActivity {
                                         dataObj.getString("type")
                                     );
                                     editor.putInt(
-                                            USER_IS_ACTIVATED,
-                                            dataObj.getInt("is_activated")
+                                        USER_IS_ACTIVATED,
+                                        dataObj.getInt("is_activated")
                                     );
                                     editor.putString(
                                         USER_PROPERTIES,

@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -254,6 +257,7 @@ public class SellerOrderDetailActivity extends AppCompatActivity {
                                             scheduleItems
                                     );
                                     lvSOrderSchedules.setAdapter(scheduleItemAdapter);
+                                    setDynamicHeight(lvSOrderSchedules);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -290,4 +294,34 @@ public class SellerOrderDetailActivity extends AppCompatActivity {
             }
         }
     }//onActivityResult
+
+    public void setDynamicHeight(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            return;
+        }
+        int totalHeight = listView.getPaddingTop() + listView.getPaddingBottom();
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(
+            listView.getWidth(),
+            View.MeasureSpec.AT_MOST
+        );
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+
+            if (listItem != null) {
+                listItem.setLayoutParams(
+                    new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT
+                    )
+                );
+                listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+                totalHeight += listItem.getMeasuredHeight();
+            }
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+    }
 }
