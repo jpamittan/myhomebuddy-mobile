@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -14,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myhomebuddy.ui.schedule.ScheduleItem;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -55,6 +55,8 @@ public class ConsumerOrderDetailActivity extends AppCompatActivity {
     TextView txtvOrderQty;
     TextView txtvOrderTotalPrice;
     ListView lvOrderSchedules;
+    ArrayList<ScheduleItem> scheduleItems;
+    ScheduleItemAdapter scheduleItemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class ConsumerOrderDetailActivity extends AppCompatActivity {
         txtvOrderQty = findViewById(R.id.txtvOrderQty);
         txtvOrderTotalPrice = findViewById(R.id.txtvOrderTotalPrice);
         lvOrderSchedules = findViewById(R.id.lvOrderSchedules);
+        scheduleItems = new ArrayList<>();
 
         Intent intent = getIntent();
         productId = intent.getIntExtra("id", 0);
@@ -94,6 +97,21 @@ public class ConsumerOrderDetailActivity extends AppCompatActivity {
             Intent prodIntent = new Intent(this, ConsumerProductDetailActivity.class);
             prodIntent.putExtra("id", productId);
             startActivity(prodIntent);
+        });
+
+        lvOrderSchedules.setOnItemClickListener((parent, view, position, id) -> {
+            Intent details = new Intent(
+                this,
+                SellerOrderScheduleDetailsActivity.class
+            );
+            details.putExtra("id", scheduleItems.get(position).getId());
+            details.putExtra("date", scheduleItems.get(position).getDate());
+            details.putExtra("time", scheduleItems.get(position).getTime());
+            details.putExtra("qty", String.valueOf(scheduleItems.get(position).getQty()));
+            details.putExtra("amt", String.valueOf(scheduleItems.get(position).getPrice()));
+            details.putExtra("status", scheduleItems.get(position).getStatus());
+
+            startActivityForResult(details, 1);
         });
     }
 
@@ -193,23 +211,30 @@ public class ConsumerOrderDetailActivity extends AppCompatActivity {
                                         "Total amount: " + data.getString("total_amount")
                                     );
 
+                                    scheduleItems.clear();
                                     JSONArray jaOrders = data.getJSONArray("order_schedules");
-                                    ArrayList<String> listSchedules = new ArrayList<>();
                                     for(int i = 0; i < jaOrders.length(); i++){
-                                        listSchedules.add(
-                                            (i + 1)
-                                            + ".  Date: " + jaOrders.getJSONObject(i).getString("schedule_date")
-                                            + "  Time: " + jaOrders.getJSONObject(i).getString("schedule_time")
-                                            + "  Pc(s): " + jaOrders.getJSONObject(i).getString("qty")
-                                            + "  Price: ₱" + jaOrders.getJSONObject(i).getString("total_amount")
+                                        scheduleItems.add(new ScheduleItem(
+                                                jaOrders.getJSONObject(i).getInt("id"),
+                                                jaOrders.getJSONObject(i)
+                                                    .getString("schedule_date"),
+                                                jaOrders.getJSONObject(i)
+                                                    .getString("schedule_time"),
+                                                Float.parseFloat(
+                                                    jaOrders.getJSONObject(i)
+                                                        .getString("total_amount")
+                                                ),
+                                                jaOrders.getJSONObject(i).getInt("qty"),
+                                                jaOrders.getJSONObject(i).getString("status")
+                                            )
                                         );
                                     }
-                                    ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                                    scheduleItemAdapter = new ScheduleItemAdapter(
                                         ConsumerOrderDetailActivity.this,
-                                        android.R.layout.simple_list_item_1,
-                                        listSchedules
+                                        R.layout.fragment_schedule_item,
+                                        scheduleItems
                                     );
-                                    lvOrderSchedules.setAdapter(adapter);
+                                    lvOrderSchedules.setAdapter(scheduleItemAdapter);
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -236,4 +261,15 @@ public class ConsumerOrderDetailActivity extends AppCompatActivity {
             ).show();
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if(resultCode == SellerOrderScheduleDetailsActivity.RESULT_OK){
+                fetchOrder(productId);
+            }
+        }
+    }//onActivityResult
 }

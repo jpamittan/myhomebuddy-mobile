@@ -1,20 +1,52 @@
 package com.example.myhomebuddy.ui.schedule;
 
 public class ScheduleItem {
-    int qty;
-    String month;
-    int day;
+    int id;
+    String date;
     String time;
-    String name;
-    String image;
+    float price;
+    int qty;
+    String status;
 
-    public ScheduleItem(int qty, String month, int day, String time, String name, String image) {
-        this.qty = qty;
-        this.month = month;
-        this.day = day;
+    public ScheduleItem(int id, String date, String time, float price, int qty, String status) {
+        this.id = id;
+        this.date = date;
         this.time = time;
-        this.name = name;
-        this.image = image;
+        this.price = price;
+        this.qty = qty;
+        this.status = status;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 
     public int getQty() {
@@ -25,39 +57,11 @@ public class ScheduleItem {
         this.qty = qty;
     }
 
-    public String getMonth() {
-        return month;
+    public String getStatus() {
+        return status;
     }
 
-    public void setMonth(String month) {
-        this.month = month;
+    public void setStatus(String status) {
+        this.status = status;
     }
-
-    public int getDay() {
-        return day;
-    }
-
-    public void setDay(int day) {
-        this.day = day;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public String getTime() { return time; }
-
-    public void setTime(String time) { this.time = time; }
 }

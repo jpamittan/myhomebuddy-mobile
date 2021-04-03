@@ -134,12 +134,18 @@ public class ScheduleFragment extends Fragment {
                                 JSONObject joSellerProps = new JSONObject(sellerProps);
                                 orders.add(new Order(
                                         dataArr.getJSONObject(i).getInt("id"),
-                                        dataArr.getJSONObject(i).getJSONObject("product").getInt("id"),
-                                        dataArr.getJSONObject(i).getJSONObject("product").getString("image"),
-                                        dataArr.getJSONObject(i).getJSONObject("product").getString("name"),
-                                        joSellerProps.getJSONObject("business").getString("name"),
-                                        dataArr.getJSONObject(i).getJSONObject("product").getString("category"),
-                                        dataArr.getJSONObject(i).getJSONObject("product").getString("sub_category")
+                                        dataArr.getJSONObject(i).getJSONObject("product")
+                                            .getInt("id"),
+                                        dataArr.getJSONObject(i).getJSONObject("product")
+                                            .getString("image"),
+                                        dataArr.getJSONObject(i).getJSONObject("product")
+                                            .getString("name"),
+                                        joSellerProps.getJSONObject("business")
+                                            .getString("name"),
+                                        dataArr.getJSONObject(i).getJSONObject("product")
+                                            .getString("category"),
+                                        dataArr.getJSONObject(i).getJSONObject("product")
+                                            .getString("sub_category")
                                 ));
                             }
                             orderItemAdapter = new OrderItemAdapter(

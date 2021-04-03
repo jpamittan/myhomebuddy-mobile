@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myhomebuddy.ui.schedule.ScheduleItem;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -58,11 +59,8 @@ public class SellerOrderDetailActivity extends AppCompatActivity {
     TextView txtvSOrderQty;
     TextView txtvSOrderTotalPrice;
     ListView lvSOrderSchedules;
-    ArrayList<Integer> orderScheduleIds;
-    ArrayList<String> orderScheduleDates;
-    ArrayList<String> orderScheduleTimes;
-    ArrayList<String> orderScheduleQtys;
-    ArrayList<String> orderScheduleAmts;
+    ArrayList<ScheduleItem> scheduleItems;
+    ScheduleItemAdapter scheduleItemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,11 +91,7 @@ public class SellerOrderDetailActivity extends AppCompatActivity {
         token_type = shared.getString(TOKEN_TYPE, "Bearer");
         token = (shared.getString(TOKEN, ""));
 
-        orderScheduleIds = new ArrayList<>();
-        orderScheduleDates = new ArrayList<>();
-        orderScheduleTimes = new ArrayList<>();
-        orderScheduleQtys = new ArrayList<>();
-        orderScheduleAmts = new ArrayList<>();
+        scheduleItems = new ArrayList<>();
 
         progress = new ProgressDialog(this);
         progress.setTitle("Loading");
@@ -114,16 +108,17 @@ public class SellerOrderDetailActivity extends AppCompatActivity {
         });
 
         lvSOrderSchedules.setOnItemClickListener((parent, view, position, id) -> {
-            Intent scheduleDetails = new Intent(
+            Intent details = new Intent(
                 this,
                 SellerOrderScheduleDetailsActivity.class
             );
-            scheduleDetails.putExtra("id", orderScheduleIds.get(position));
-            scheduleDetails.putExtra("date", orderScheduleDates.get(position));
-            scheduleDetails.putExtra("time", orderScheduleTimes.get(position));
-            scheduleDetails.putExtra("qty", orderScheduleQtys.get(position));
-            scheduleDetails.putExtra("amt", orderScheduleAmts.get(position));
-            startActivityForResult(scheduleDetails, 1);
+            details.putExtra("id", scheduleItems.get(position).getId());
+            details.putExtra("date", scheduleItems.get(position).getDate());
+            details.putExtra("time", scheduleItems.get(position).getTime());
+            details.putExtra("qty", String.valueOf(scheduleItems.get(position).getQty()));
+            details.putExtra("amt", String.valueOf(scheduleItems.get(position).getPrice()));
+            details.putExtra("status", scheduleItems.get(position).getStatus());
+            startActivityForResult(details, 1);
         });
     }
 
@@ -235,43 +230,30 @@ public class SellerOrderDetailActivity extends AppCompatActivity {
                                         "Total amount: " + data.getString("total_amount")
                                     );
 
-                                    orderScheduleIds.clear();
-                                    orderScheduleDates.clear();
-                                    orderScheduleTimes.clear();
-                                    orderScheduleQtys.clear();
-                                    orderScheduleAmts.clear();
+                                    scheduleItems.clear();
                                     JSONArray jaOrders = data.getJSONArray("order_schedules");
-                                    ArrayList<String> listSchedules = new ArrayList<>();
                                     for(int i = 0; i < jaOrders.length(); i++){
-                                        orderScheduleIds.add(jaOrders.getJSONObject(i)
-                                            .getInt("id"));
-                                        orderScheduleDates.add(jaOrders.getJSONObject(i)
-                                            .getString("schedule_date"));
-                                        orderScheduleTimes.add(jaOrders.getJSONObject(i)
-                                            .getString("schedule_time"));
-                                        orderScheduleQtys.add(jaOrders.getJSONObject(i)
-                                            .getString("qty"));
-                                        orderScheduleAmts.add(jaOrders.getJSONObject(i)
-                                            .getString("total_amount"));
-                                        listSchedules.add(
-                                            (i + 1)
-                                            + ".  Date: " + jaOrders.getJSONObject(i)
-                                                .getString("schedule_date")
-                                            + "  Time: " + jaOrders.getJSONObject(i)
-                                                .getString("schedule_time")
-                                            + "  Pc(s): " + jaOrders.getJSONObject(i)
-                                                .getString("qty")
-                                            + "  Price: ₱" + jaOrders.getJSONObject(i)
-                                                .getString("total_amount")
+                                        scheduleItems.add(new ScheduleItem(
+                                                jaOrders.getJSONObject(i).getInt("id"),
+                                                jaOrders.getJSONObject(i)
+                                                        .getString("schedule_date"),
+                                                jaOrders.getJSONObject(i)
+                                                        .getString("schedule_time"),
+                                                Float.parseFloat(
+                                                        jaOrders.getJSONObject(i)
+                                                                .getString("total_amount")
+                                                ),
+                                                jaOrders.getJSONObject(i).getInt("qty"),
+                                                jaOrders.getJSONObject(i).getString("status")
+                                            )
                                         );
                                     }
-                                    ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                                        SellerOrderDetailActivity.this,
-                                        android.R.layout.simple_list_item_1,
-                                        listSchedules
+                                    scheduleItemAdapter = new ScheduleItemAdapter(
+                                            SellerOrderDetailActivity.this,
+                                            R.layout.fragment_schedule_item,
+                                            scheduleItems
                                     );
-                                    lvSOrderSchedules.setAdapter(adapter);
-
+                                    lvSOrderSchedules.setAdapter(scheduleItemAdapter);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

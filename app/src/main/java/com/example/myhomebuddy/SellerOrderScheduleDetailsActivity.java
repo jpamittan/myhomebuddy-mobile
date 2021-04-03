@@ -5,8 +5,10 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -36,21 +38,27 @@ public class SellerOrderScheduleDetailsActivity extends AppCompatActivity {
     public static final String SHARED_PREFS_TOKEN = "sharedPrefsToken";
     public static final String TOKEN = "token";
     public static final String TOKEN_TYPE = "token_type";
+    public static final String USER_TYPE = "user_type";
     String token_type;
     String token;
+    String user_type;
     ProgressDialog progress;
     TextView txtvScheduleDate;
     TextView txtvScheduleTime;
     TextView txtvScheduleQty;
     TextView txtvScheduleAmount;
+    TextView txtvScheduleRemarks;
+    TextView txtvScheduleStatus;
     EditText etmRemarks;
     Button btnScheduleCancel;
     Button btnScheduleDelivered;
+    Button btnScheduleClear;
     int orderScheduleId;
     String scheduleDate;
     String scheduleTime;
     String scheduleQty;
     String scheduleAmount;
+    String status;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -62,13 +70,17 @@ public class SellerOrderScheduleDetailsActivity extends AppCompatActivity {
         txtvScheduleTime = findViewById(R.id.txtvScheduleTime);
         txtvScheduleQty = findViewById(R.id.txtvScheduleQty);
         txtvScheduleAmount = findViewById(R.id.txtvScheduleAmount);
+        txtvScheduleStatus = findViewById(R.id.txtvScheduleStatus);
+        txtvScheduleRemarks = findViewById(R.id.txtvScheduleRemarks);
         etmRemarks = findViewById(R.id.etmRemarks);
         btnScheduleCancel = findViewById(R.id.btnScheduleCancel);
         btnScheduleDelivered = findViewById(R.id.btnScheduleDelivered);
+        btnScheduleClear = findViewById(R.id.btnScheduleClear);
 
         SharedPreferences shared = getSharedPreferences(SHARED_PREFS_TOKEN, MODE_PRIVATE);
         token_type = shared.getString(TOKEN_TYPE, "Bearer");
         token = (shared.getString(TOKEN, ""));
+        user_type = (shared.getString(USER_TYPE, ""));
 
         Intent intent = getIntent();
         orderScheduleId = intent.getIntExtra("id", 0);
@@ -76,6 +88,39 @@ public class SellerOrderScheduleDetailsActivity extends AppCompatActivity {
         scheduleTime = intent.getStringExtra("time");
         scheduleQty = intent.getStringExtra("qty");
         scheduleAmount = intent.getStringExtra("amt");
+        status = intent.getStringExtra("status");
+
+        if (status.equals("Cancelled")) {
+            txtvScheduleStatus.setTextColor(Color.parseColor("#E74C3C"));
+        } else {
+            txtvScheduleStatus.setTextColor(Color.parseColor("#2ECC71"));
+        }
+        txtvScheduleStatus.setText(status);
+
+        if (user_type.equals("Seller")) {
+            btnScheduleClear.setVisibility(View.GONE);
+        } else {
+            txtvScheduleRemarks.setVisibility(View.GONE);
+            etmRemarks.setVisibility(View.GONE);
+            btnScheduleCancel.setVisibility(View.GONE);
+            btnScheduleDelivered.setVisibility(View.GONE);
+        }
+
+        if (
+            status.isEmpty() ||
+            status.equals(null) ||
+            status.equals("null") ||
+            status.equals("")
+        ) {
+            txtvScheduleStatus.setVisibility(View.GONE);
+            btnScheduleClear.setVisibility(View.GONE);
+        } else {
+            etmRemarks.setFocusable(false);
+            etmRemarks.setFocusableInTouchMode(false);
+            etmRemarks.setClickable(false);
+            btnScheduleCancel.setVisibility(View.GONE);
+            btnScheduleDelivered.setVisibility(View.GONE);
+        }
 
         txtvScheduleDate.setText("Date: " + scheduleDate);
         txtvScheduleTime.setText("Time: " + scheduleTime);
@@ -98,7 +143,7 @@ public class SellerOrderScheduleDetailsActivity extends AppCompatActivity {
                         + "\"status\": \"cancelled\","
                         + "\"remarks\": \"" + etmRemarks.getText().toString() + "\""
                     + "}";
-                    scheduleTransaction(json);
+                    scheduleTransaction(json, "Post");
                 })
                 .setNegativeButton(android.R.string.no, null).show();
         });
@@ -113,29 +158,54 @@ public class SellerOrderScheduleDetailsActivity extends AppCompatActivity {
                         + "\"status\": \"delivered\","
                         + "\"remarks\": \"" + etmRemarks.getText().toString() + "\""
                     + "}";
-                    scheduleTransaction(json);
+                    scheduleTransaction(json, "Post");
+                })
+                .setNegativeButton(android.R.string.no, null).show();
+        });
+
+        btnScheduleClear.setOnClickListener(v -> {
+            new AlertDialog.Builder(this)
+                .setTitle("Clear schedule")
+                .setMessage("Are you sure?")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
+                    scheduleTransaction("", "Delete");
                 })
                 .setNegativeButton(android.R.string.no, null).show();
         });
     }
 
-    private void scheduleTransaction(String json)
+    private void scheduleTransaction(String json, String command)
     {
         progress.show();
         try {
             OkHttpClient client = new OkHttpClient();
-            RequestBody body = RequestBody.create(JSON, json);
             Log.i("JSON", json);
-            Request request = new Request.Builder()
-                .header("Accept", "application/json")
-                .header("Content-Type", "application/json")
-                .header(
-                    "Authorization",
-                    token_type + " " + token
-                )
-                .url("http://" + host + "/api/order/schedule/" + orderScheduleId)
-                .post(body)
-                .build();
+            Request request = null;
+            if (command.equals("Post")) {
+                RequestBody body = RequestBody.create(JSON, json);
+                request = new Request.Builder()
+                    .header("Accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .header(
+                            "Authorization",
+                            token_type + " " + token
+                    )
+                    .url("http://" + host + "/api/order/schedule/" + orderScheduleId)
+                    .post(body)
+                    .build();
+            } else if (command.equals("Delete")) {
+                request = new Request.Builder()
+                    .header("Accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .header(
+                            "Authorization",
+                            token_type + " " + token
+                    )
+                    .url("http://" + host + "/api/order/schedule/" + orderScheduleId)
+                    .delete()
+                    .build();
+            }
 
             client.newCall(request).enqueue(new Callback() {
                 @Override public void onFailure(Call call, IOException e) {

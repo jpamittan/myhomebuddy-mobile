@@ -41,7 +41,15 @@
                 android:text="Total amount:" />
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/txtvScheduleStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Status"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/txtvScheduleRemarks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -72,6 +80,14 @@
                 android:backgroundTint="#009688"
                 android:drawableLeft="@android:drawable/ic_menu_send"
                 android:text="Delivered" />
+
+            <Button
+                android:id="@+id/btnScheduleClear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#2196F3"
+                android:drawableLeft="@android:drawable/ic_menu_delete"
+                android:text="Clear from the list" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
