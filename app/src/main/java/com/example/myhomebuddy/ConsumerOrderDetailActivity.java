@@ -38,7 +38,7 @@ import okhttp3.ResponseBody;
 public class ConsumerOrderDetailActivity extends AppCompatActivity {
 
 //    private static final String host = "192.168.254.101:8000";
-    private static final String host = "ec2-54-89-125-177.compute-1.amazonaws.com";
+    private static final String host = "ec2-13-229-96-65.ap-southeast-1.compute.amazonaws.com";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     public static final String SHARED_PREFS_TOKEN = "sharedPrefsToken";
     public static final String TOKEN = "token";

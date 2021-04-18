@@ -30,10 +30,10 @@
     <string name="schedule_details">Schedule details</string>
     <string name="search">Search</string>
     <string name="terms_conditions_consumers">
-        <a href="http://ec2-54-89-125-177.compute-1.amazonaws.com/terms/consumers">Terms and Conditions</a>
+        <a href="http://ec2-13-229-96-65.ap-southeast-1.compute.amazonaws.com/terms/consumers">Terms and Conditions</a>
     </string>
     <string name="terms_conditions_sellers">
-        <a href="http://ec2-54-89-125-177.compute-1.amazonaws.com/terms/sellers">Terms and Conditions</a>
+        <a href="http://ec2-13-229-96-65.ap-southeast-1.compute.amazonaws.com/terms/sellers">Terms and Conditions</a>
     </string>
     <string-array name="month">
         <item>Jan</item>
@@ -351,6 +351,4 @@
         <item>Cash on delivery</item>
         <item>Credit/Debit</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

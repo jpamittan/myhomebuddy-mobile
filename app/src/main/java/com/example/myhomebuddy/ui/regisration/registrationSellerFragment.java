@@ -61,7 +61,7 @@ public class registrationSellerFragment extends Fragment {
 
     private String selectedImageView = null;
     private Boolean blnProceedRegister;
-    private static final String host = "ec2-54-89-125-177.compute-1.amazonaws.com";
+    private static final String host = "ec2-13-229-96-65.ap-southeast-1.compute.amazonaws.com";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     private ImageView imgvBusinessPermit;
